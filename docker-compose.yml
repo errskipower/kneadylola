@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:5.7
+    volumes: 
+      - kneadylola-mysql-data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: qwerty
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+  wp:
+    depends_on: 
+      - db
+    image: wordpress:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - ./theme:/var/www/html/wp-content/themes/kneadylola-emroth
+      - ./plugins:/var/www/html/wp-content/plugins
+      - ./uploads:/var/www/html/wp-content/uploads
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+  node:
+    depends_on:
+      - wp
+    restart: 'no'
+    image: node:latest
+    working_dir: /var/www/html/wp-content/themes/kneadylola-emroth
+    command: >
+      bash -c "npm install --allow-root
+      && npm run watcher"
+    volumes:
+      - ./theme:/var/www/html/wp-content/themes/kneadylola-emroth
+volumes:
+    kneadylola-mysql-data: {}
+
