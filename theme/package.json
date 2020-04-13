@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "node-sass": "^4.13.1",
-    "@wordpress/scripts": "^7.2.0"
+    "@wordpress/scripts": "^7.2.0",
+    "bulma": "^0.8.2"
   },
   "scripts": {
     "watcher": "node-sass -w sass/style.scss style.css",

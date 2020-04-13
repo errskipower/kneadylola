@@ -180,3 +180,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+/**
+ * Custom Bulma Nav Menu Walker.
+ */
+require get_template_directory() . '/inc/walker-nav-menu.php';

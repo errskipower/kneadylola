@@ -1,4 +1,7 @@
-$font__main: sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=DM+Serif+Text&family=Italiana&display=swap');
+
+$font__main: 'Arvo', serif;
+$font__display: 'Italiana', serif;
 $font__code: monaco, consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
 $font__pre: "Courier 10 Pitch", courier, monospace;
 $font__line-height-body: 1.5;
