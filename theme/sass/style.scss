@@ -26,12 +26,15 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 --------------------------------------------------------------*/
 @charset "utf-8";
 
+// Add mixins
+@import "mixins/mixins-master";
+
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=DM+Serif+Text&family=Italiana&display=swap');
 
 // Set your brand colors
 $pink: #d59696;
-$grey-dark: hsl(0, 0%, 29%);
+$grey-dark: hsl(0, 0%, 20%);
 
 // Update Bulma's global variables
 $family-sans-serif: "Arvo", sans-serif;
@@ -47,27 +50,187 @@ $navbar-item-hover-background-color: transparent;
 $navbar-dropdown-item-hover-background-color: transparent;
 $navbar-item-hover-color: $primary;
 $navbar-dropdown-item-hover-color: $primary;
-$border: $primary;
+$navbar-dropdown-border-top: 2px solid $primary;
 $navbar-font-size: 12px;
+$footer-background-color: $primary;
+$input-focus-border-color: $primary;
+$input-focus-box-shadow-color: rgba($primary, .25);
 
 @import "../node_modules/bulma/bulma.sass";
 
-.title {
-	font-family: $family-display;
-	text-transform: uppercase;
-	font-size: $size-0;
+a {
+  @include transition(all .2s ease);
+}
+
+.site-title {
+  font-family: $family-display;
+  text-transform: uppercase;
+  font-size: $size-0;
 }
 
 #mainNavbar {
-	justify-content: center;
-	text-transform: uppercase;
+  justify-content: center;
 }
 
 .navbar-item,
 .navbar-link {
-	font-size: $navbar-font-size;
-	padding: 0.5rem 1.5rem;
+  font-size: $navbar-font-size;
+  padding: 0.5rem 1.5rem;
 }
+
+.footer {
+  font-size: $small-font-size;
+}
+
+#primary,
+#secondary {
+  padding: 20px;
+}
+
+#secondary {
+  @extend .has-text-centered;
+  border-left: 1px dashed $grey-light;
+  width: 100%;
+
+  .search-submit {
+    display: none;
+  }
+
+  .widget-title {
+    @extend .is-4;
+    @extend .title;
+    color: $primary;
+    font-family: $family-display;
+  }
+
+  .widget {
+    padding-bottom: 30px;
+  }
+
+  .search-field {
+    @extend .input;
+    @extend .is-small;
+  }
+
+  .about-me-widget p {
+    padding-top: 15px;
+  }
+
+  ul.mks_social_widget_ul {
+    .socicon-instagram {
+      background: none;
+    }
+    li a:before  {
+      color: $grey-dark;
+    }
+  }
+
+  .top-posts-image-container {
+    @include transition(all .3s ease);
+
+    &:hover {
+      img {
+        filter: brightness(0.7);
+      }
+      .top-posts-title {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+    .top-posts-title {
+      @include transition(all .3s ease);
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      padding: 15px 5px;
+      width: 100%;
+      text-shadow: 1px 1px 2px rgba($grey-dark, 0.5);
+    }
+  }
+
+}
+
+#content {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.site-main {
+
+  .columns:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+
+  .entry-title.title {
+    margin: 1rem 0;
+  }
+
+  .entry-content {
+    margin: 1.5rem 0;
+  }
+}
+
+.letter-spacing-1 {
+  letter-spacing: 1px;
+}
+
+.tag-link a {
+  @extend .tag; 
+  @extend .is-primary;
+  @extend .is-light;
+  @extend .is-uppercase;
+}
+
+.post-thumbnail-image-container {
+
+  &:hover {
+    .post-thumbnail-image {
+      filter: brightness(0.8);
+    }
+  }
+
+  .post-thumbnail-content {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 20%;
+
+    .post-thumbnail-title {
+      padding-top: 10px;
+      text-shadow: 1px 1px 2px rgba($grey-dark, 0.5);
+    }
+  }
+
+  img.post-thumbnail-image {
+    @include transition(all .3s ease-in-out);
+    object-fit: cover;
+    height: 250px;
+    filter: brightness(0.7);
+  }
+}
+
+.ajax-load-more-wrap {
+  @extend .column;
+  @extend .is-half;
+  
+  .alm-load-more-btn {
+    &:disabled {
+      display: none;
+    }
+
+    &.loading {
+      @extend .is-loading;
+    }
+  }
+}
+
+.single-post .entry-title {
+  margin: 1rem 0;
+}
+
+
 
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
@@ -77,22 +240,22 @@ $navbar-font-size: 12px;
 # Elements
 # Forms
 # Navigation
-	## Links
-	## Menus
+  ## Links
+  ## Menus
 # Accessibility
 # Alignments
 # Clearings
 # Widgets
 # Content
-	## Posts and pages
-	## Comments
+  ## Posts and pages
+  ## Comments
 # Infinite scroll
 # Media
-	## Captions
-	## Galleries
+  ## Captions
+  ## Galleries
 --------------------------------------------------------------*/
 // @import "variables-site/variables-site";
-@import "mixins/mixins-master";
+// @import "mixins/mixins-master";
 
 // /*--------------------------------------------------------------
 // # Normalize

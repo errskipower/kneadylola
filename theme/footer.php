@@ -13,21 +13,13 @@
 
   </div><!-- #content -->
 
-  <footer id="colophon" class="site-footer">
-    <div class="site-info">
-      <a href="<?php echo esc_url( __( 'https://wordpress.org/', 'kneadylola-emroth' ) ); ?>">
-        <?php
-        /* translators: %s: CMS name, i.e. WordPress. */
-        printf( esc_html__( 'Proudly powered by %s', 'kneadylola-emroth' ), 'WordPress' );
-        ?>
-      </a>
-      <span class="sep"> | </span>
-        <?php
-        /* translators: 1: Theme name, 2: Theme author. */
-        printf( esc_html__( 'Theme: %1$s by %2$s.', 'kneadylola-emroth' ), 'kneadylola-emroth', '<a href="http://errskipower@gmail.com">Emily Roth</a>' );
-        ?>
-    </div><!-- .site-info -->
-  </footer><!-- #colophon -->
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        Copyright &copy; <?php echo date("Y"); ?> <?php bloginfo( 'name' ); ?>. All Rights Reserved. Site Design by <a href="http://emroth.com">Emily Roth</a>.
+      </p>
+    </div>
+  </footer>
 </div><!-- #page -->
 
 <?php wp_footer(); ?>

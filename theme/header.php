@@ -23,15 +23,16 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div id="page" class="site">
-  <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'kneadylola-emroth' ); ?></a>
+  <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e('Skip to content', 'kneadylola-emroth'); ?></a>
 
   <header>
     <section class="hero">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title site-title">
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo('name'); ?></a>
           </h1>
+          <h2 class="subtitle site-description has-text-primary"><?php bloginfo('description'); ?></h2>
         </div>
       </div>
     </section>
@@ -54,7 +55,7 @@
         [
           'theme_location' => 'menu-1',
           'container'      => false,
-          'menu_class'     => 'navbar-menu',
+          'menu_class'     => 'navbar-menu is-uppercase letter-spacing-1',
           'menu_id'        => 'mainNavbar',
           'after'          => "</div>",
           'walker'         => new \Navwalker
