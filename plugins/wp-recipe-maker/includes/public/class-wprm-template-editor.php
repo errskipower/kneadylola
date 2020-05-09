@@ -77,6 +77,54 @@ class WPRM_Template_Editor {
 	 */
 	public static function prepare_template_for_editor( $template ) {
 		$template['style'] = self::extract_style_with_properties( $template );
+
+		// Fix deprecated shortcodes.
+		$template['html'] = str_ireplace( '[wprm-recipe-author-container', 			'[wprm-recipe-author label_container="1"', $template['html'] );
+		$template['html'] = str_ireplace( '[wprm-recipe-cost-container', 			'[wprm-recipe-cost label_container="1"', $template['html'] );
+		$template['html'] = str_ireplace( '[wprm-recipe-custom-field-container', 	'[wprm-recipe-custom-field label_container="1"', $template['html'] );
+		$template['html'] = str_ireplace( '[wprm-recipe-nutrition-container', 		'[wprm-recipe-nutrition label_container="1"', $template['html'] );
+		$template['html'] = str_ireplace( '[wprm-recipe-servings-container', 		'[wprm-recipe-servings label_container="1"', $template['html'] );
+		$template['html'] = str_ireplace( '[wprm-recipe-tag-container', 			'[wprm-recipe-tag label_container="1"', $template['html'] );
+		$template['html'] = str_ireplace( '[wprm-recipe-time-container', 			'[wprm-recipe-time label_container="1"', $template['html'] );
+
+		// Migrate tags and times container.
+		$pattern = get_shortcode_regex( array( 'wprm-recipe-tags-container' ) );
+		if ( preg_match_all( '/' . $pattern . '/s', $template['html'], $matches ) && array_key_exists( 2, $matches ) ) {
+			foreach ( $matches[2] as $key => $value ) {
+				if ( 'wprm-recipe-tags-container' === $value ) {
+					$old_shortcode = $matches[0][ $key ];
+					
+					$new_shortcode = $old_shortcode;
+					$new_shortcode = str_ireplace( '[wprm-recipe-tags-container', '[wprm-recipe-meta-container fields="tags"', $new_shortcode );
+					$new_shortcode = str_ireplace( ' separator=', ' tag_separator=', $new_shortcode );
+
+					$template['html'] = str_ireplace( $old_shortcode, $new_shortcode, $template['html'] );
+				}
+			}
+		}
+
+		$pattern = get_shortcode_regex( array( 'wprm-recipe-times-container' ) );
+		if ( preg_match_all( '/' . $pattern . '/s', $template['html'], $matches ) && array_key_exists( 2, $matches ) ) {
+			foreach ( $matches[2] as $key => $value ) {
+				if ( 'wprm-recipe-times-container' === $value ) {
+					$old_shortcode = $matches[0][ $key ];
+					
+					$new_shortcode = $old_shortcode;
+					$new_shortcode = str_ireplace( '[wprm-recipe-times-container', '[wprm-recipe-meta-container fields="times"', $new_shortcode );
+					$new_shortcode = str_ireplace( ' shorthand=', ' time_shorthand=', $new_shortcode );
+					$new_shortcode = str_ireplace( ' icon_prep=', ' icon_prep_time=', $new_shortcode );
+					$new_shortcode = str_ireplace( ' icon_cook=', ' icon_cook_time=', $new_shortcode );
+					$new_shortcode = str_ireplace( ' icon_custom=', ' icon_custom_time=', $new_shortcode );
+					$new_shortcode = str_ireplace( ' icon_total=', ' icon_total_time=', $new_shortcode );
+					$new_shortcode = str_ireplace( ' label_prep=', ' label_prep_time=', $new_shortcode );
+					$new_shortcode = str_ireplace( ' label_cook=', ' label_cook_time=', $new_shortcode );
+					$new_shortcode = str_ireplace( ' label_total=', ' label_total_time=', $new_shortcode );
+
+					$template['html'] = str_ireplace( $old_shortcode, $new_shortcode, $template['html'] );
+				}
+			}
+		}
+		
 		return $template;
 	}
 

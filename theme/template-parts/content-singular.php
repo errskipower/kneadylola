@@ -9,8 +9,15 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-  <header class="entry-header">
+<article id="post-<?php the_ID(); ?>" <?php post_class('is-relative'); ?>>
+  <?php
+  edit_post_link(
+    '<i class="fas fa-edit fa-xs"></i>',
+    '<span class="edit-link"><span class="icon has-text-grey">',
+    '</span></span>'
+  );
+  ?>
+  <header class="entry-header has-text-centered">
     <div class="tag-link">
       <?php the_category(', '); ?>
     </div>
@@ -19,16 +26,22 @@
     if ( 'post' === get_post_type() ) :
       ?>
       <div class="entry-meta is-size-7 is-uppercase letter-spacing-1">
-        <?php
-        kneadylola_emroth_posted_on();
-        ?>
+        <span>
+          <?php kneadylola_emroth_posted_on(); ?>
+        </span>
+        <span class="has-text-weight-bold"> &sdot; </span>
+        <span>
+          <a href="#comments">
+            <?php echo get_comments_number() . ' ' . get_comments_number_text('comments', 'comment', 'comments'); ?>
+          </a>
+        </span>
       </div><!-- .entry-meta -->
     <?php endif; ?>
   </header><!-- .entry-header -->
 
   <?php kneadylola_emroth_post_thumbnail(); ?>
 
-  <div class="entry-content">
+  <div class="entry-content content">
     <?php
     the_content(
       sprintf(

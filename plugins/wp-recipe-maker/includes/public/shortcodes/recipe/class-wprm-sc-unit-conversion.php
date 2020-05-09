@@ -31,6 +31,7 @@ class WPRM_SC_Unit_Conversion extends WPRM_Template_Shortcode {
 				'options' => array(
 					'links' => 'Links',
 					'dropdown' => 'Dropdown',
+					'buttons' => 'Buttons',
 				),
 			),
 			'text_style' => array(
@@ -39,7 +40,40 @@ class WPRM_SC_Unit_Conversion extends WPRM_Template_Shortcode {
 				'options' => 'text_styles',
 				'dependency' => array(
 					'id' => 'style',
+					'value' => 'dropdown',
+					'type' => 'inverse',
+				),
+			),
+			'separator' => array(
+				'default' => ' - ',
+				'type' => 'text',
+				'dependency' => array(
+					'id' => 'style',
 					'value' => 'links',
+				),
+			),
+			'button_background' => array(
+				'default' => '#ffffff',
+				'type' => 'color',
+				'dependency' => array(
+					'id' => 'style',
+					'value' => 'buttons',
+				),
+			),
+			'button_accent' => array(
+				'default' => '#333333',
+				'type' => 'color',
+				'dependency' => array(
+					'id' => 'style',
+					'value' => 'buttons',
+				),
+			),
+			'button_radius' => array(
+				'default' => '3px',
+				'type' => 'size',
+				'dependency' => array(
+					'id' => 'style',
+					'value' => 'buttons',
 				),
 			),
 		);

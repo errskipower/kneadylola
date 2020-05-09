@@ -136,7 +136,7 @@ class WPRM_Recipe_Sanitizer {
 						// Custom ingredient link.
 						if ( isset( $ingredient['link'] ) ) {
 							$sanitized_ingredient['link'] = array(
-								'url' => isset( $ingredient['link']['url'] ) ? sanitize_text_field( $ingredient['link']['url'] ) : '',
+								'url' => isset( $ingredient['link']['url'] ) ? esc_url_raw( $ingredient['link']['url'] ) : '',
 								'nofollow' => isset( $ingredient['link']['nofollow'] ) ? sanitize_text_field( $ingredient['link']['nofollow'] ) : 'default',
 							);
 						}

@@ -1,14 +1,23 @@
 import animateScrollTo from 'animated-scroll-to';
 
-jQuery(document).ready(function($) {
-    jQuery(document).on('click', '.wprm-jump-smooth-scroll', function(e) {
-        e.preventDefault();
+window.WPRecipeMaker.jump = {
+	init: () => {
+		document.addEventListener( 'click', function(e) {
+			for ( var target = e.target; target && target != this; target = target.parentNode ) {
+				if ( target.matches( '.wprm-jump-smooth-scroll' ) ) {
+					WPRecipeMaker.jump.onClick( target, e );
+					break;
+				}
+			}
+		}, false );
+	},
+	onClick: ( el, e ) => {
+		e.preventDefault();
 
-        const link = jQuery(this);
-        const target = link.attr('href');
+        const target = el.getAttribute('href');
 
         // Get smooth scroll speed.
-        let speed = parseInt( link.data( 'smooth-scroll' ) );
+        let speed = parseInt( el.dataset.smoothScroll );
         if ( speed < 0 ) {
             speed = 500;
         }
@@ -17,5 +26,17 @@ jQuery(document).ready(function($) {
             verticalOffset: -100,
             speed,
         } );
-    });
+	},
+};
+
+ready(() => {
+	window.WPRecipeMaker.jump.init();
 });
+
+function ready( fn ) {
+    if (document.readyState != 'loading'){
+        fn();
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}

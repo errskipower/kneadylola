@@ -436,26 +436,37 @@ jQuery(document).ready(function($) {
       var paging_controls = $('#alm-paging input[name=paging-controls]:checked').val();
       var paging_show_at_most = $('#alm-paging input#show-at-most').val();
       var paging_classes = $('#alm-paging input#paging-classes').val();
+      var paging_scroll = $('#alm-paging select#paging-scroll').val();
+      var paging_scrolltop = $('#alm-paging input#paging-scrolltop').val();
       
       var paging_first_label = $('#alm-paging input#paging-first-label').val();
       var paging_last_label = $('#alm-paging input#paging-last-label').val();
       var paging_previous_label = $('#alm-paging input#paging-previous-label').val();
       var paging_next_label = $('#alm-paging input#paging-next-label').val();
-      
+
       if(paging !== 'false' && paging != undefined){
          output += ' paging="'+paging+'"';
-         output += ' paging_controls="'+paging_controls+'"';
-         if(paging_show_at_most !== ''){
-            output += ' paging_show_at_most="'+paging_show_at_most+'"';
-         }
+         
          if(paging_classes !== ''){
             output += ' paging_classes="'+paging_classes+'"';
          }
+         if(paging_show_at_most !== ''){
+            output += ' paging_show_at_most="'+paging_show_at_most+'"';
+         }
+         if(paging_scroll !== 'false'){
+	         $('.paging-scrolltop-wrap').show();
+	         paging_scrolltop = (paging_scrolltop) ? paging_scrolltop : 100;
+            output += ' paging_scroll="true:'+ paging_scrolltop+ '"';
+         } else {
+	         $('.paging-scrolltop-wrap').hide();
+         }
+         
          $('#nav-controls').slideDown(250, 'alm_easeInOutQuad');
+    
+         output += ' paging_controls="'+paging_controls+'"';
          
          if(paging_controls === 'true'){
             $('#paging-controls-nav').slideDown(250, 'alm_easeInOutQuad');
-            
             output += (paging_first_label !== '') ? ' paging_first_label="'+paging_first_label+'"' : '';
             output += (paging_last_label !== '') ? ' paging_last_label="'+paging_last_label+'"' : '';
             output += (paging_previous_label !== '') ? ' paging_previous_label="'+paging_previous_label+'"' : '';

@@ -2,6 +2,7 @@ import React from 'react';
 
 import '../../../css/admin/template/property.scss';
 
+import Icon from 'Shared/Icon';
 import Helpers from '../general/Helpers';
 
 import PropertyColor from './properties/Color';
@@ -42,10 +43,21 @@ const Property = (props) => {
         return null;
     }
 
+    let helpIcon = null;
+    if ( props.property.hasOwnProperty( 'help' ) ) {
+        helpIcon = (
+            <Icon
+                type="question"
+                title={ props.property.help }
+                className="wprm-admin-icon-help"
+            />
+        );
+    }
+
     return (
         <div className="wprm-template-property">
             <div className="wprm-template-property-label">
-                { props.property.name }
+                { props.property.name } { helpIcon }
             </div>
             <div className={ `wprm-template-property-value wprm-template-property-value-${props.property.type}` }>
                 <PropertyComponent

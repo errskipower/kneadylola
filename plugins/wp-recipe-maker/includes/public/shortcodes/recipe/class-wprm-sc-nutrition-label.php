@@ -21,7 +21,7 @@ class WPRM_SC_Nutrition_Label extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-nutrition-label';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
 			),
@@ -31,6 +31,15 @@ class WPRM_SC_Nutrition_Label extends WPRM_Template_Shortcode {
 				'options' => array(
 					'label' => 'Label',
 					'simple' => 'Simple Text',
+					'grouped' => 'Grouped',
+				),
+			),
+			'group_width' => array(
+				'default' => '180px',
+				'type' => 'size',
+				'dependency' => array(
+					'id' => 'style',
+					'value' => 'grouped',
 				),
 			),
 			'label_background_color' => array(
@@ -49,107 +58,129 @@ class WPRM_SC_Nutrition_Label extends WPRM_Template_Shortcode {
 					'value' => 'label',
 				),
 			),
-			'text_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-				'dependency' => array(
-					'id' => 'style',
-					'value' => 'label',
-					'type' => 'inverse',
-				),
-			),
-			'header' => array(
-				'default' => '',
-				'type' => 'text',
-			),
-			'header_tag' => array(
-				'default' => 'h3',
-				'type' => 'dropdown',
-				'options' => 'header_tags',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
-			),
-			'header_style' => array(
-				'default' => 'bold',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
-			),
-			'label_color' => array(
-				'default' => '#777777',
-				'type' => 'color',
-				'dependency' => array(
-					'id' => 'style',
-					'value' => 'simple',
-				),
-			),
-			'value_color' => array(
-				'default' => '#333333',
-				'type' => 'color',
-				'dependency' => array(
-					'id' => 'style',
-					'value' => 'simple',
-				),
-			),
-			'label_separator' => array(
-				'default' => ': ',
-				'type' => 'text',
-				'dependency' => array(
-					'id' => 'style',
-					'value' => 'simple',
-				),
-			),
-			'label_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-				'dependency' => array(
-					'id' => 'style',
-					'value' => 'simple',
-				),
-			),
-			'nutrition_separator' => array(
-				'default' => ' | ',
-				'type' => 'text',
-				'dependency' => array(
-					'id' => 'style',
-					'value' => 'simple',
-				),
-			),
-			'unit_separator' => array(
-				'default' => '',
-				'type' => 'text',
-				'dependency' => array(
-					'id' => 'style',
-					'value' => 'simple',
-				),
-			),
-			'daily' => array(
-				'default' => '0',
-				'type' => 'toggle',
-				'dependency' => array(
-					'id' => 'style',
-					'value' => 'simple',
-				),
-			),
-			'align' => array(
-				'default' => 'left',
-				'type' => 'dropdown',
-				'options' => array(
-					'left' => 'Aligned left',
-					'center' => 'Aligned center',
-					'right' => 'Aligned right',
-				),
-			),
 		);
+
+		$section_atts = WPRM_Shortcode_Helper::get_section_atts();
+		$section_atts['text_style']['dependency'] = array(
+			'id' => 'style',
+			'value' => 'label',
+			'type' => 'inverse',
+		);
+
+		$atts = array_merge( $atts, WPRM_Shortcode_Helper::get_section_atts() );
+
+		$atts = array_merge( $atts, array(
+				'text_style' => array(
+					'default' => 'normal',
+					'type' => 'dropdown',
+					'options' => 'text_styles',
+					'dependency' => array(
+						'id' => 'style',
+						'value' => 'label',
+						'type' => 'inverse',
+					),
+				),
+				'header' => array(
+					'default' => '',
+					'type' => 'text',
+				),
+				'header_tag' => array(
+					'default' => 'h3',
+					'type' => 'dropdown',
+					'options' => 'header_tags',
+					'dependency' => array(
+						'id' => 'header',
+						'value' => '',
+						'type' => 'inverse',
+					),
+				),
+				'header_style' => array(
+					'default' => 'bold',
+					'type' => 'dropdown',
+					'options' => 'text_styles',
+					'dependency' => array(
+						'id' => 'header',
+						'value' => '',
+						'type' => 'inverse',
+					),
+				),
+				'label_color' => array(
+					'default' => '#777777',
+					'type' => 'color',
+					'dependency' => array(
+						'id' => 'style',
+						'value' => 'label',
+						'type' => 'inverse',
+					),
+				),
+				'value_color' => array(
+					'default' => '#333333',
+					'type' => 'color',
+					'dependency' => array(
+						'id' => 'style',
+						'value' => 'label',
+						'type' => 'inverse',
+					),
+				),
+				'label_separator' => array(
+					'default' => ': ',
+					'type' => 'text',
+					'dependency' => array(
+						'id' => 'style',
+						'value' => 'label',
+						'type' => 'inverse',
+					),
+				),
+				'label_style' => array(
+					'default' => 'normal',
+					'type' => 'dropdown',
+					'options' => 'text_styles',
+					'dependency' => array(
+						'id' => 'style',
+						'value' => 'label',
+						'type' => 'inverse',
+					),
+				),
+				'nutrition_separator' => array(
+					'default' => ' | ',
+					'type' => 'text',
+					'dependency' => array(
+						'id' => 'style',
+						'value' => 'simple',
+					),
+				),
+				'unit_separator' => array(
+					'default' => '',
+					'type' => 'text',
+					'dependency' => array(
+						'id' => 'style',
+						'value' => 'label',
+						'type' => 'inverse',
+					),
+				),
+				'daily' => array(
+					'default' => '0',
+					'type' => 'toggle',
+					'dependency' => array(
+						'id' => 'style',
+						'value' => 'label',
+						'type' => 'inverse',
+					),
+				),
+				'align' => array(
+					'default' => 'left',
+					'type' => 'dropdown',
+					'options' => array(
+						'left' => 'Aligned left',
+						'center' => 'Aligned center',
+						'right' => 'Aligned right',
+					),
+				),
+			)
+		);
+
+		self::$attributes = $atts;
+
 		parent::init();
 	}
 

@@ -21,14 +21,9 @@ class WPRM_SC_Time extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-recipe-time';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
-			),
-			'text_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
 			),
 			'type' => array(
 				'default' => '',
@@ -40,6 +35,10 @@ class WPRM_SC_Time extends WPRM_Template_Shortcode {
 				'type' => 'toggle',
 			),
 		);
+
+		$atts = array_merge( $atts, WPRM_Shortcode_Helper::get_label_container_atts() );
+		self::$attributes = $atts;
+
 		parent::init();
 	}
 
@@ -69,9 +68,17 @@ class WPRM_SC_Time extends WPRM_Template_Shortcode {
 				$output = self::get_time( 'total_time', $recipe->total_time(), false, $atts );
 				break;
 			case 'custom':
+				$atts['label'] = $recipe->custom_time_label();
 				$output = self::get_time( 'custom_time', $recipe->custom_time(), $recipe->custom_time_zero(), $atts );
 				break;
 		}
+
+		// Only continue if there actually is a time set.
+		if ( ! $output ) {
+			return '';
+		}
+
+		$output = WPRM_Shortcode_Helper::get_label_container( $atts, array( 'time', $atts['type']. '-time' ), $output );
 
 		return apply_filters( parent::get_hook(), $output, $atts, $recipe );
 	}

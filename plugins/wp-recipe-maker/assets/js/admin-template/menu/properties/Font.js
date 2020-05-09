@@ -13,6 +13,10 @@ const PropertyFont = (props) => {
                 value: 'inherit',
                 label: 'Inherit from parent',
             },
+            {
+                value: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
+                label: 'System Font',
+            },
         ],
     },{
         label: 'Default Serif Fonts',

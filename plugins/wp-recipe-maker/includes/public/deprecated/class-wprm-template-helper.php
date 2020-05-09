@@ -68,13 +68,19 @@ class WPRM_Template_Helper {
 	 * @param		 array   $ingredient Ingredient to display.
 	 * @param		 boolean $show_link  Wether to display the ingredient link if present.
 	 */
-	public static function ingredient_name( $ingredient, $show_link = false ) {
+	public static function ingredient_name( $ingredient, $show_link = false, $recipe = false ) {
 		$name = $ingredient['name'];
 		$show_link = WPRM_Addons::is_active( 'premium' ) ? $show_link : false;
 
 		$link = array();
 		if ( $show_link ) {
-			$link = isset( $ingredient['link'] ) ? $ingredient['link'] : WPRMP_Ingredient_Links::get_ingredient_link( $ingredient['id'] );
+			if ( $recipe && 'global' === $recipe->ingredient_links_type() ) {
+				$link = WPRMP_Ingredient_Links::get_ingredient_link( $ingredient['id'] );
+			} elseif ( isset( $ingredient['link'] ) ) {
+				$link = $ingredient['link'];
+			} else {
+				$link = WPRMP_Ingredient_Links::get_ingredient_link( $ingredient['id'] );
+			}
 
 			// Easy Affiliate Links integration.
 			if ( class_exists( 'EAFL_Link_Manager' ) ) {

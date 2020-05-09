@@ -36,6 +36,18 @@ class WPRM_SC_Rating extends WPRM_Template_Shortcode {
 					'count' => 'Total # Ratings',
 				),
 			),
+			'style' => array(
+				'default' => 'separate',
+				'type' => 'dropdown',
+				'options' => array(
+					'inline' => 'Inline',
+					'separate' => 'On its own line',
+				),
+				'dependency' => array(
+					'id' => 'display',
+					'value' => 'stars-details',
+				),
+			),
 			'text_style' => array(
 				'default' => 'normal',
 				'type' => 'dropdown',
@@ -117,8 +129,7 @@ class WPRM_SC_Rating extends WPRM_Template_Shortcode {
 		$rating = $recipe->rating();
 
 		if ( 'stars' === $atts['display'] || 'stars-details' === $atts['display'] ) {
-			$voteable = (bool) $atts['voteable'];
-			$output = self::get_stars( $recipe, $rating, $voteable, $atts['icon'], $atts['icon_color'] );
+			$output = self::get_stars( $rating, $atts, $recipe );
 
 			if ( ! $output ) {
 				return '';
@@ -163,14 +174,18 @@ class WPRM_SC_Rating extends WPRM_Template_Shortcode {
 	 * Get the stars output for a rating.
 	 *
 	 * @since    3.2.0
-	 * @param    mixed 	 $recipe   Recipe to display the rating for.
-	 * @param    array 	 $rating   Rating to display.
-	 * @param    mixed	 $icon 	   Icon to use for the rating.
-	 * @param    boolean $voteable Wether the user is allowed to vote.
+	 * @param    array 	 $rating   	Rating to display.
+	 * @param    mixed	 $atts		Options passed along with the shortcode.
+	 * @param    mixed 	 $recipe   	Recipe to display the rating for.
 	 */
-	private static function get_stars( $recipe, $rating, $voteable, $icon, $color ) {
+	private static function get_stars( $rating, $atts, $recipe ) {
 		$output = '';
 		$rating_value = ceil( $rating['average'] );
+
+		// Backwards compatibility.
+		$voteable = (bool) $atts['voteable'];
+		$icon = $atts['icon'];
+		$color = $atts['icon_color'];
 
 		// Only output when there is an actual rating or users can rate.
 		if ( $rating_value ) {
@@ -179,8 +194,17 @@ class WPRM_SC_Rating extends WPRM_Template_Shortcode {
 			$output .= '.wprm-recipe-rating .wprm-rating-star.wprm-rating-star-full svg * { fill: ' . $color . '; }';
 			$output .= '</style>';
 
+			// Get classes.
+			$classes = array(
+				'wprm-recipe-rating',
+			);
+
+			if ( 'stars-details' === $atts['display'] ) {
+				$classes[] = 'wprm-recipe-rating-' . $atts['style'];
+			}
+
 			// Output stars.
-			$output .= '<div class="wprm-recipe-rating">';
+			$output .= '<div class="' . implode( ' ', $classes ) . '">';
 			for ( $i = 1; $i <= 5; $i++ ) {
 				$class = $i <= $rating_value ? 'wprm-rating-star-full' : 'wprm-rating-star-empty';
 				$output .= '<span class="wprm-rating-star wprm-rating-star-' . $i . ' ' . $class . '" data-rating="' . $i . '" data-color="' . $color . '">';
@@ -189,7 +213,7 @@ class WPRM_SC_Rating extends WPRM_Template_Shortcode {
 			}	
 		}
 
-		return apply_filters( 'wprm_recipe_rating_shortcode_stars', $output, $recipe, $rating, $voteable, $icon, $color );
+		return apply_filters( 'wprm_recipe_rating_shortcode_stars', $output, $recipe, $rating, $voteable, $icon, $color, $atts );
 	}
 }
 

@@ -3,8 +3,8 @@ Contributors: dcooney, connekthq
 Donate link: https://connekthq.com/donate/
 Tags: infinite scroll, infinite scrolling, scroll, infinite, lazy load, lazy loading, endless scroll, pagination, ajax pagination, ajax, ajax posts, woocommerce, ajax load more, masonry
 Requires at least: 4.0
-Tested up to: 5.4.0
-Stable tag: 5.3.0
+Tested up to: 5.4.1
+Stable tag: 5.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -382,6 +382,16 @@ How to install Ajax Load More.
 
 
 == Changelog ==
+
+= 5.3.1 - May 1, 2020 =
+* NEW - Added support for creating paged URLs with the SEO add-on and Masonry.
+* UPDATE - Improved accessiblity of element focus feature by implementing native browser support (`preventScroll`) for focusing on elements without scrolling after an Ajax load. There is still a slight jump on mobile safari and chrome for iOS. Hopefully these browsers will implementbetter native support for [preventScroll](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/focus)
+* UPDATE - Removed `Top of Page` global ALM setting.
+* FIX - Add accessibility fix for when using Masonry transition. New item is now auto focused after an Ajax load.
+* FIX - Fixed issue with Destroy After not working correctly after being filtered.
+* FIX - Fixed bug with CTA and Preloaded add-ons. If `cta="false"` was set Ajax Load More may still render the CTA is some cases.
+* FIX- Fixed issue with custom Filtering and Masonry not appending items after a filter.
+
 
 = 5.3.0 - April 22, 2020 =
 * NEW - Added support and core functionality for new [WooCommerce add-on](https://connekthq.com/plugins/ajax-load-more/add-ons/woocommerce/).

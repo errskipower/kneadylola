@@ -21,38 +21,9 @@ class WPRM_SC_Instructions extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-recipe-instructions';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
-			),
-			'text_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-			),
-			'header' => array(
-				'default' => '',
-				'type' => 'text',
-			),
-			'header_tag' => array(
-				'default' => 'h3',
-				'type' => 'dropdown',
-				'options' => 'header_tags',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
-			),
-			'header_style' => array(
-				'default' => 'bold',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
 			),
 			'group_tag' => array(
 				'default' => 'h4',
@@ -134,7 +105,93 @@ class WPRM_SC_Instructions extends WPRM_Template_Shortcode {
 					'after' => 'After Text',
 				),
 			),
+			'media_toggle' => array(
+				'default' => '',
+				'type' => 'dropdown',
+				'options' => array(
+					'' => "Don't show",
+					'header' => 'Show media toggle in the header',
+					'before' => 'Show media toggle before the instructions',
+				),
+			),
+			'toggle_text_style' => array(
+				'default' => 'normal',
+				'type' => 'dropdown',
+				'options' => 'text_styles',
+				'dependency' => array(
+					'id' => 'media_toggle',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'toggle_button_background' => array(
+				'default' => '#ffffff',
+				'type' => 'color',
+				'dependency' => array(
+					'id' => 'media_toggle',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'toggle_button_accent' => array(
+				'default' => '#333333',
+				'type' => 'color',
+				'dependency' => array(
+					'id' => 'media_toggle',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'toggle_button_radius' => array(
+				'default' => '3px',
+				'type' => 'size',
+				'dependency' => array(
+					'id' => 'media_toggle',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'toggle_on_icon' => array(
+				'default' => 'camera-2',
+				'type' => 'icon',
+				'dependency' => array(
+					'id' => 'media_toggle',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'toggle_on_text' => array(
+				'default' => '',
+				'type' => 'text',
+				'dependency' => array(
+					'id' => 'media_toggle',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'toggle_off_icon' => array(
+				'default' => 'camera-no',
+				'type' => 'icon',
+				'dependency' => array(
+					'id' => 'media_toggle',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'toggle_off_text' => array(
+				'default' => '',
+				'type' => 'text',
+				'dependency' => array(
+					'id' => 'media_toggle',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
 		);
+	
+		$atts = array_merge( WPRM_Shortcode_Helper::get_section_atts(), $atts );
+		self::$attributes = $atts;
+
 		parent::init();
 	}
 
@@ -158,17 +215,26 @@ class WPRM_SC_Instructions extends WPRM_Template_Shortcode {
 			'wprm-block-text-' . $atts['text_style'],
 		);
 
+		// Args for optional unit conversion and adjustable servings.
+		$media_toggle_atts = array(
+			'id' => $atts['id'],
+			'text_style' => $atts['toggle_text_style'],
+			'button_background' => $atts['toggle_button_background'],
+			'button_accent' => $atts['toggle_button_accent'],
+			'button_radius' => $atts['toggle_button_radius'],
+			'on_icon' => $atts['toggle_on_icon'],
+			'on_text' => $atts['toggle_on_text'],
+			'off_icon' => $atts['toggle_off_icon'],
+			'off_text' => $atts['toggle_off_text'],
+		);
+
 		$output = '<div class="' . implode( ' ', $classes ) . '">';
+		$output .= WPRM_Shortcode_Helper::get_section_header( $atts, 'instructions', array(
+			'media_toggle_atts' => $media_toggle_atts,
+		) );
 
-		if ( $atts['header'] ) {
-			$classes = array(
-				'wprm-recipe-header',
-				'wprm-recipe-instructions-header',
-				'wprm-block-text-' . $atts['header_style'],
-			);
-
-			$tag = trim( $atts['header_tag'] );
-			$output .= '<' . $tag . ' class="' . implode( ' ', $classes ) . '">' . __( $atts['header'], 'wp-recipe-maker' ) . '</' . $tag . '>';
+		if ( 'before' === $atts['media_toggle'] ) {
+			$output .= WPRM_SC_Media_Toggle::shortcode( $media_toggle_atts );
 		}
 
 		$instructions = $recipe->instructions();
@@ -362,7 +428,7 @@ class WPRM_SC_Instructions extends WPRM_Template_Shortcode {
 			}
 		}
 
-		return $output;
+		return do_shortcode( $output );
 	}
 }
 

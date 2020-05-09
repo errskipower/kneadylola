@@ -1,0 +1,76 @@
+/**
+ * WPRM custom recipe theme
+ */
+
+
+// @charset "utf-8";
+
+// // Add mixins
+// @import "mixins/mixins-master";
+
+// // Import a Google Font
+// @import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=DM+Serif+Text&family=Italiana&display=swap');
+
+// @import "variables";
+
+// // Import only what you need from Bulma
+// @import "../node_modules/bulma/sass/utilities/_all.sass";
+// @import "../node_modules/bulma/sass/base/_all.sass";
+// @import "../node_modules/bulma/sass/elements/button.sass";
+// @import "../node_modules/bulma/sass/elements/container.sass";
+// @import "../node_modules/bulma/sass/elements/title.sass";
+// @import "../node_modules/bulma/sass/elements/image.sass";
+
+
+.kneady-lola-compact-recipe{
+  background: $primary-light;
+  border: 1px dashed $primary;
+  padding: 25px;
+
+  h2.wprm-recipe-name {
+    @extend .is-size-2;
+    margin: 0;
+  }
+  .wprm-block-text-normal,
+  .wprm-block-text-italic {
+    font-weight: normal;
+  }
+
+  .wprm-recipe-image {
+    @extend .image;
+  }
+
+  .wprm-recipe-print {
+    @extend .is-size-7;
+
+    color: $grey !important;
+    letter-spacing: 1px;
+
+    .wprm-recipe-print-icon {
+      color: $grey !important;
+      padding-right: 5px;
+    }
+  }
+
+  .wprm-recipe-rating-details {
+    display: inline-block;
+    padding-left: 10px;
+    font-style: italic;
+  }
+  .wprm-recipe-details-label {
+    @extend .is-size-7;
+    letter-spacing: .5px;
+  }
+
+  .wprm-recipe-summary {
+    @extend .is-size-7;
+  }
+
+  .wprm-recipe-header {
+    padding: 1.5rem 0;
+  }
+
+  .wprm-recipe-group-name {
+    padding-bottom: 1rem;
+  }
+}

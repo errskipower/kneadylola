@@ -273,6 +273,7 @@ class WPRM_Shortcode {
 				$type = end( self::$shortcode_type );
 			} else {
 				$type = 'single';
+
 				if ( is_feed() ) {
 					$type = 'feed';
 				} elseif ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
@@ -280,6 +281,8 @@ class WPRM_Shortcode {
 					$recipe_template = ''; // Force default AMP template.
 				} elseif ( isset( $GLOBALS['wp']->query_vars['rest_route'] ) && '/wp/v2/posts' === substr( $GLOBALS['wp']->query_vars['rest_route'], 0, 12 ) ) {
 					$type = 'single'; // Use single template when accessing post through REST API.
+				} elseif ( is_admin() ) {
+					$type = 'single';
 				} elseif ( is_front_page() || ! is_singular() || ! is_main_query() ) {
 					$type = 'archive';
 				}
@@ -310,7 +313,8 @@ class WPRM_Shortcode {
 
 			$output .= WPRM_Template_Manager::get_template( $recipe, $type, $recipe_template );
 			$output .= '</div>';
-			return $output;
+			
+			return apply_filters( 'wprm_recipe_shortcode_output', $output, $recipe, $type, $recipe_template );
 		} else {
 			return '';
 		}

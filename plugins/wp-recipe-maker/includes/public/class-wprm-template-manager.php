@@ -583,7 +583,6 @@ class WPRM_Template_Manager {
 			}
 		}
 
-
 		self::$templates = $templates;
 	}
 

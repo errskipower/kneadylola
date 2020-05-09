@@ -47,6 +47,8 @@ export default {
         return fullShortcode;
     },
     dependencyMet(object, properties) {
+        let dependencyMet = true;
+
         if (properties && object.hasOwnProperty('dependency')) {
             let dependencies = object.dependency;
             
@@ -56,23 +58,44 @@ export default {
             }
 
             // Check all dependencies.
+            const dependencyCompare = object.hasOwnProperty( 'dependency_compare' ) ? object.dependency_compare : 'AND';
+            let firstDependencyChecked = true;
+
             for ( let dependency of dependencies ) {
                 if ( properties.hasOwnProperty(dependency.id) ) {
-                    const dependency_value = properties[dependency.id].value;
+                    let thisDependencyMet = false;
+                    const thisDependencyValue = properties[dependency.id].value;
+                    const thisDependencyType = dependency.hasOwnProperty('type') ? dependency.type : 'match';
 
-                    if ( dependency.hasOwnProperty('type') && 'inverse' == dependency.type ) {
-                        if (dependency_value == dependency.value) {
-                            return false;
+                    if ( 'inverse' == thisDependencyType ) {
+                        if ( thisDependencyValue != dependency.value ) {
+                            thisDependencyMet = true;
+                        }
+                    } else if ( 'includes' == thisDependencyType ) {
+                        if ( thisDependencyValue.includes( dependency.value ) ) {
+                            thisDependencyMet = true;
                         }
                     } else {
-                        if (dependency_value != dependency.value) {
-                            return false;
+                        if ( thisDependencyValue == dependency.value ) {
+                            thisDependencyMet = true;
                         }
+                    }
+
+                    // Combine multiple dependencies.
+                    if ( 'OR' === dependencyCompare ) {
+                        if ( firstDependencyChecked ) {
+                            dependencyMet = false;
+                            firstDependencyChecked = false;
+                        }
+
+                        dependencyMet = dependencyMet || thisDependencyMet;
+                    } else {
+                        dependencyMet = dependencyMet && thisDependencyMet;
                     }
                 }
             }
         }
 
-        return true;
+        return dependencyMet;
     },
 };

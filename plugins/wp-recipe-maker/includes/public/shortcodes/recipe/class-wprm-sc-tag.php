@@ -21,14 +21,9 @@ class WPRM_SC_Tag extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-recipe-tag';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
-			),
-			'text_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
 			),
 			'key' => array(
 				'default' => '',
@@ -40,6 +35,10 @@ class WPRM_SC_Tag extends WPRM_Template_Shortcode {
 				'type' => 'text',
 			),
 		);
+
+		$atts = array_merge( $atts, WPRM_Shortcode_Helper::get_label_container_atts() );
+		self::$attributes = $atts;
+
 		parent::init();
 	}
 
@@ -83,6 +82,8 @@ class WPRM_SC_Tag extends WPRM_Template_Shortcode {
 		}
 
 		$output .= '</span>';
+
+		$output = WPRM_Shortcode_Helper::get_label_container( $atts, array( 'tag', $atts['key'] ), $output );
 		
 		return apply_filters( parent::get_hook(), $output, $atts, $recipe );
 	}

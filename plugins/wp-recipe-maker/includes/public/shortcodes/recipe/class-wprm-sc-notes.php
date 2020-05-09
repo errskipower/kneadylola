@@ -21,40 +21,15 @@ class WPRM_SC_Notes extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-recipe-notes';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
 			),
-			'text_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-			),
-			'header' => array(
-				'default' => '',
-				'type' => 'text',
-			),
-			'header_tag' => array(
-				'default' => 'h3',
-				'type' => 'dropdown',
-				'options' => 'header_tags',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
-			),
-			'header_style' => array(
-				'default' => 'bold',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
-			),
 		);
+
+		$atts = array_merge( WPRM_Shortcode_Helper::get_section_atts(), $atts );
+		self::$attributes = $atts;
+
 		parent::init();
 	}
 
@@ -79,17 +54,7 @@ class WPRM_SC_Notes extends WPRM_Template_Shortcode {
 		);
 
 		$output = '<div class="' . implode( ' ', $classes ) . '">';
-
-		if ( $atts['header'] ) {
-			$classes = array(
-				'wprm-recipe-header',
-				'wprm-recipe-notes-header',
-				'wprm-block-text-' . $atts['header_style'],
-			);
-
-			$tag = trim( $atts['header_tag'] );
-			$output .= '<' . $tag . ' class="' . implode( ' ', $classes ) . '">' . __( $atts['header'], 'wp-recipe-maker' ) . '</' . $tag . '>';
-		}
+		$output .= WPRM_Shortcode_Helper::get_section_header( $atts, 'notes' );
 
 		$notes = parent::clean_paragraphs( $recipe->notes() );
 

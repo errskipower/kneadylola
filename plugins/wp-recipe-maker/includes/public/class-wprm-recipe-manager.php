@@ -241,9 +241,19 @@ class WPRM_Recipe_Manager {
 		$json_recipe = json_decode( $json, true );
 
 		$sanitized_recipe = WPRM_Recipe_Sanitizer::sanitize( $json_recipe );
+
+		// Fix technical fields.
 		$sanitized_recipe['id'] = 'demo';
-		$sanitized_recipe['image_url'] = WPRM_URL . 'assets/images/demo-recipe.jpg';
 		$sanitized_recipe['parent_url'] = '#';
+
+		// Set some additional fields.
+		$sanitized_recipe['image_url'] = WPRM_URL . 'assets/images/demo-recipe.jpg';
+		$sanitized_recipe['pin_image_url'] = WPRM_URL . 'assets/images/demo-recipe.jpg';
+		$sanitized_recipe['rating'] = array(
+			'count' => 8,
+			'total' => 30,
+			'average' => 3.75,
+		);
 
 		$demo_recipe = new WPRM_Recipe_Shell( $sanitized_recipe );
 		WPRM_Template_Shortcodes::set_current_recipe_shell( $demo_recipe );

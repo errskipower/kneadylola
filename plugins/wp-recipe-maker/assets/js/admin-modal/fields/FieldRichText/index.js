@@ -56,7 +56,7 @@ const FieldRichText = (props) => {
     try {
         initialValue = props.value ? getValueFromHtml( savedValue ) : defaultValue;
     } catch( e ) {
-        alert( 'Error loading one of the rich text fields. Some information may be lost. Please check the summary, equipment, ingredients and instructions before saving.' );
+        alert( 'Error loading one of the rich text fields. Some information may be lost. Please check the summary, equipment, ingredients and instructions before saving. Make sure your browser is updated to the latest version if you keep getting this message.' );
         console.log( 'Text Value', savedValue );
         console.log( 'FieldRichText Error', e );
         initialValue = defaultValue;
@@ -88,7 +88,24 @@ const FieldRichText = (props) => {
                     type={ props.toolbar ? props.toolbar : 'all' }
                     isMarkActive={ isMarkActive }
                     toggleMark={ toggleMark }
-                    setValue={ setValue }
+                    setValue={ value => {
+                            setValue( value );
+                            
+                            // Convoluted way to force immediate update.
+                            Transforms.deselect( editor );
+                            Transforms.select( editor, {
+                                path: [0,0],
+                                offset: 0,
+                            });
+                            Transforms.move( editor, {
+                                unit: 'line',
+                                edge: 'end',
+                            });
+                            Transforms.collapse( editor, {
+                                edge: 'end',
+                            });
+                        }
+                    }
                 />
                 <Editable
                     className={ `wprm-admin-modal-field-richtext${ props.className ? ` ${ props.className }` : ''}${ props.singleLine ? ` wprm-admin-modal-field-richtext-singleline` : ''}` }

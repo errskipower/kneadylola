@@ -199,4 +199,70 @@ registerBlockType( 'wp-recipe-maker/recipe-roundup-item', {
             return null;
         }
     },
+    deprecated: [
+        {
+            attributes: {
+                id: {
+                    type: 'number',
+                    default: 0,
+                },
+                link: {
+                    type: 'string',
+                    default: '',
+                },
+                nofollow: {
+                    type: 'string',
+                    default: '',
+                },
+                newtab: {
+                    type: 'string',
+                    default: '1',
+                },
+                image: {
+                    type: 'number',
+                    default: 0,
+                },
+                name: {
+                    type: 'string',
+                    default: '',
+                },
+                summary: {
+                    type: 'string',
+                    default: '',
+                },
+                template: {
+                    type: 'string',
+                    default: '',
+                },
+            },
+            supports: {
+                html: false,
+            },
+            save: (props) => {
+                const { attributes } = props;
+
+                if ( attributes.id ) {
+                    let shortcode = `[wprm-recipe-roundup-item id="${attributes.id}"`;
+                    if ( attributes.template ) {
+                        shortcode += ` template="${attributes.template}"`;
+                    }
+                    shortcode += ']';
+                    return shortcode;
+                } else if ( attributes.link ) {
+                    let shortcode = `[wprm-recipe-roundup-item link="${ cleanUpShortcodeAttribute( attributes.link )}"`;
+                    
+                    shortcode += attributes.nofollow ? ' nofollow="1"' : '';
+                    shortcode += attributes.newtab ? '' : ' newtab="0"';
+                    shortcode += attributes.image ? ` image="${ attributes.image }"` : '';
+                    shortcode += ` name="${ cleanUpShortcodeAttribute( attributes.name ) }"`;
+                    shortcode += ` summary="${ cleanUpShortcodeAttribute( attributes.summary ) }"`;
+                    
+                    shortcode += ']';
+                    return shortcode;
+                } else {
+                    return null;
+                }
+            },
+        }
+    ],
 } );

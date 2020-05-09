@@ -28,6 +28,7 @@ An overview of WP Recipe Maker features:
 *   **Easy workflow** to add recipes to any post or page
 *   Uses schema.org/Recipe JSON-LD metadata optimised for **Google Recipe search**
 *   Uses schema.org/How-to JSON-LD metadata optimised for **non-food recipes and instructions**
+*   Google **AMP** compatible
 *   Integrates recipe metadata with Yoast **SEO schema graph**
 *   Option to **disable metadata per recipe** if you want to publish non-food or DIY recipes
 *   Compatible with **Pinterest Rich Pins** and a setting to easily opt out
@@ -117,7 +118,7 @@ Yes! We pride ourselves on offering awesome support and almost always answer sup
 
 == Screenshots ==
 
-1. Example recipe using the default Compact template.
+1. Example recipe using the default Chic template.
 2. Our Template Editor allows you to completely customize the look and feel.
 3. A powerful manage pages gives you full control over your recipes.
 4. The recipe input form.
@@ -125,6 +126,35 @@ Yes! We pride ourselves on offering awesome support and almost always answer sup
 6. Fully compatible with the Classic Editor.
 
 == Changelog ==
+= 6.0.3 =
+* Fix: Prevent incorrect automatic updates from causing a fatal error
+* Fix: Prevent meta container from overflowing on mobile
+
+= 6.0.2 =
+* Fix: Prevent PHP notice when using deprecated shortcode without attributes
+
+= 6.0.1 =
+* Fix: Prevent PHP notices
+
+= 6.0.0 =
+* Feature: New "Chic" recipe template
+* Feature: Toggle for instruction images and videos
+* Feature: New Meta Container block for the Template Editor
+* Feature: Icon block for Template Editor with new icons
+* Feature: Tool to refresh video metadata
+* Improvement: Ability to set own YouTube Data API key
+* Improvement: Adjust comment rating scroll when using lazy loading
+* Improvement: Add diameter icon to toolbar
+* Improvement: Removed jQuery dependency for frontend
+* Improvement: Rich Editor browser compatibility
+* Fix: Some existing roundup blocks broken in block editor
+* Fix: Toolbar suggestions not being saved correctly in some cases
+* Fix: Problem with code in rich editor disappearing
+* Fix: Prevent images from overflowing in Block Editor preview
+* Fix: Hustle plugin compatibility
+* Fix: Prevent JS regex warning in Firefox
+* Fix: Make sure instruction video gets output in all cases
+
 = 5.11.1 =
 * Fix: Prevent PHP notice from showing up
 
@@ -974,6 +1004,18 @@ Yes! We pride ourselves on offering awesome support and almost always answer sup
 * Feature: Fallback recipe when the plugin is disabled
 
 == Upgrade notice ==
+= 6.0.3 =
+Update to prevent incorrect automatic updates from causing a fatal error
+
+= 6.0.2 =
+Update to prevent a PHP notice from showing up
+
+= 6.0.1 =
+Update to prevent a PHP notice from showing up
+
+= 6.0.0 =
+Various fixes and improvements with a brand new recipe template
+
 = 5.11.1 =
 Update to prevent a PHP notice from showing up
 

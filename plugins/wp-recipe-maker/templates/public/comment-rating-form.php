@@ -20,11 +20,20 @@ if ( ! is_admin() && false === WPRM_Template_Shortcodes::get_current_recipe_id()
 	<span class="wprm-rating-stars">
 		<?php
 		for ( $i = 1; $i <= 5; $i++ ) {
+			$classes = array(
+				'wprm-rating-star',
+			);
+			
 			if ( $i <= $rating ) {
-					echo '<span class="wprm-rating-star rated" data-rating="' . esc_attr( $i ) . '">';
-			} else {
-					echo '<span class="wprm-rating-star" data-rating="' . esc_attr( $i ) . '">';
+				$classes[] = 'rated';
 			}
+
+			$events = ' onmouseenter="WPRecipeMaker.rating.onMouseEnter(this)"';
+			$events .= ' onmouseleave="WPRecipeMaker.rating.onMouseLeave(this)"';
+			$events .= ' onclick="WPRecipeMaker.rating.onClick(this)"';
+
+			echo '<span class="' . implode( ' ', $classes ) . '" data-rating="' . esc_attr( $i ) . '"' . $events . '>';
+
 			ob_start();
 			include( WPRM_DIR . 'assets/icons/star-empty.svg' );
 			$star_icon = ob_get_contents();

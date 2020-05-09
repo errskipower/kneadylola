@@ -428,6 +428,16 @@ class WPRM_MetadataVideo {
 	}
 
 	/**
+	 * Get the Youtube API key.
+	 *
+	 * @since   6.0.0
+	 */
+	private static function get_youtube_api_key() {
+		$personal_key = trim( WPRM_Settings::get( 'metadata_youtube_api_key' ) );
+		return $personal_key ? $personal_key : self::$apis['youtube'];
+	}
+
+	/**
 	 * Get Youtube metadata video the API.
 	 *
 	 * @since   3.1.0
@@ -443,7 +453,7 @@ class WPRM_MetadataVideo {
 		}
 
 		if ( $video_id ) {
-			$api_key = self::$apis['youtube'];
+			$api_key = self::get_youtube_api_key();
 			$api_url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=' . urlencode( $video_id ) . '&key=' . urlencode( $api_key );
 
 			$response = wp_remote_get( $api_url );

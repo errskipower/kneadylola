@@ -28,11 +28,11 @@
   <header>
     <section class="hero">
       <div class="hero-body">
-        <div class="container has-text-centered">
+        <div class="container has-text-centered is-family-secondary">
           <h1 class="title site-title">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo('name'); ?></a>
           </h1>
-          <h2 class="subtitle site-description has-text-primary"><?php bloginfo('description'); ?></h2>
+          <h2 class="subtitle site-description has-text-primary has-text-weight-bold"><?php bloginfo('description'); ?></h2>
         </div>
       </div>
     </section>

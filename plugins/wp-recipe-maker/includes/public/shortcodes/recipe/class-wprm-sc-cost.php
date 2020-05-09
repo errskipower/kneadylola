@@ -21,16 +21,15 @@ class WPRM_SC_Cost extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-recipe-cost';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
 			),
-			'text_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-			),
 		);
+
+		$atts = array_merge( $atts, WPRM_Shortcode_Helper::get_label_container_atts() );
+		self::$attributes = $atts;
+
 		parent::init();
 	}
 
@@ -56,6 +55,8 @@ class WPRM_SC_Cost extends WPRM_Template_Shortcode {
 		);
 
 		$output = '<span class="' . implode( ' ', $classes ) . '">' . $recipe->cost() . '</span>';
+		$output = WPRM_Shortcode_Helper::get_label_container( $atts, 'cost', $output );
+
 		return apply_filters( parent::get_hook(), $output, $atts, $recipe );
 	}
 }

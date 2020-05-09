@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ajax Load More\n"
-"POT-Creation-Date: 2020-04-23 14:56-0400\n"
+"POT-Creation-Date: 2020-05-01 12:34-0400\n"
 "PO-Revision-Date: 2018-06-20 13:05-0500\n"
 "Last-Translator: Darren Cooney <darren@connekthq.com>\n"
 "Language-Team: \n"
@@ -289,69 +289,65 @@ msgstr ""
 msgid "Legacy Callbacks"
 msgstr ""
 
-#: admin/admin.php:1487
-msgid "Top of Page"
-msgstr ""
-
-#: admin/admin.php:1495
+#: admin/admin.php:1497
 msgid "Delete on Uninstall"
 msgstr ""
 
-#: admin/admin.php:1503
+#: admin/admin.php:1505
 msgid "Dynamic Content"
 msgstr ""
 
-#: admin/admin.php:1511
+#: admin/admin.php:1513
 msgid "Editor Button"
 msgstr ""
 
-#: admin/admin.php:1519
+#: admin/admin.php:1521
 msgid "Error Notices"
 msgstr ""
 
-#: admin/admin.php:1603
+#: admin/admin.php:1605
 msgid ""
 "Customize the user experience of Ajax Load More by updating the fields below."
 msgstr ""
 
-#: admin/admin.php:1616
+#: admin/admin.php:1618
 msgid "The following settings affect the WordPress admin area only."
 msgstr ""
 
-#: admin/admin.php:1647
+#: admin/admin.php:1649
 msgid "I want to use my own CSS styles."
 msgstr ""
 
-#: admin/admin.php:1647
+#: admin/admin.php:1649
 msgid "View Ajax Load More CSS"
 msgstr ""
 
-#: admin/admin.php:1667
+#: admin/admin.php:1669
 msgid "Hide shortcode button in WYSIWYG editor."
 msgstr ""
 
-#: admin/admin.php:1688
+#: admin/admin.php:1690
 msgid ""
 "Display error messaging regarding repeater template updates in the browser "
 "console."
 msgstr ""
 
-#: admin/admin.php:1709
+#: admin/admin.php:1711
 msgid ""
 "Disable dynamic population of categories, tags and authors in the Shortcode "
 "Builder.<span style=\"display:block\">Recommended if you have a large number "
 "of categories, tags and/or authors."
 msgstr ""
 
-#: admin/admin.php:1730 admin/admin.php:1733
+#: admin/admin.php:1732 admin/admin.php:1735
 msgid "Ajax Posts Here"
 msgstr ""
 
-#: admin/admin.php:1735
+#: admin/admin.php:1737
 msgid "You can modify the container type when building a shortcode."
 msgstr ""
 
-#: admin/admin.php:1752
+#: admin/admin.php:1754
 msgid ""
 "Add custom classes to the <i>.alm-listing</i> container - classes are "
 "applied globally and will appear with every instance of Ajax Load More. "
@@ -359,67 +355,67 @@ msgid ""
 "shortcode.</span>"
 msgstr ""
 
-#: admin/admin.php:1817
+#: admin/admin.php:1819
 msgid ""
 "Select an Ajax loading style - you can choose between a <strong>Button</"
 "strong> or <strong>Infinite Scroll</strong>"
 msgstr ""
 
-#: admin/admin.php:1822 admin/shortcode-builder/shortcode-builder.php:87
+#: admin/admin.php:1824 admin/shortcode-builder/shortcode-builder.php:87
 msgid "Button Style (Dark)"
 msgstr ""
 
-#: admin/admin.php:1829 admin/shortcode-builder/shortcode-builder.php:94
+#: admin/admin.php:1831 admin/shortcode-builder/shortcode-builder.php:94
 msgid "Button Style (Light)"
 msgstr ""
 
-#: admin/admin.php:1834 admin/shortcode-builder/shortcode-builder.php:98
+#: admin/admin.php:1836 admin/shortcode-builder/shortcode-builder.php:98
 msgid "Infinite Scroll (No Button)"
 msgstr ""
 
-#: admin/admin.php:1851
+#: admin/admin.php:1853
 msgid "Click to Preview"
 msgstr ""
 
-#: admin/admin.php:1852 admin/shortcode-builder/shortcode-builder.php:112
+#: admin/admin.php:1854 admin/shortcode-builder/shortcode-builder.php:112
 #: admin/shortcode-builder/shortcode-builder.php:350
 #: core/classes/class.alm-shortcode.php:216
 msgid "Older Posts"
 msgstr ""
 
-#: admin/admin.php:1889
+#: admin/admin.php:1877
 msgid "Improve site performance by loading Ajax Load More CSS inline."
 msgstr ""
 
-#: admin/admin.php:1909
+#: admin/admin.php:1897
 msgid "Add classes to your <strong>Load More</strong> button."
 msgstr ""
 
-#: admin/admin.php:1953
+#: admin/admin.php:1941
 msgid ""
 "On initial page load, move the user's browser window to the top of the "
 "screen."
 msgstr ""
 
-#: admin/admin.php:1954
+#: admin/admin.php:1942
 msgid "This may help prevent the loading of unnecessary posts."
 msgstr ""
 
-#: admin/admin.php:1977
+#: admin/admin.php:1965
 msgid "Disable REST API."
 msgstr ""
 
-#: admin/admin.php:1978
+#: admin/admin.php:1966
 msgid ""
 "Use `admin-ajax.php` in favour of the WordPress REST API for all Ajax "
 "requests."
 msgstr ""
 
-#: admin/admin.php:2001
+#: admin/admin.php:1989
 msgid "Load legacy JavaScript callback functions."
 msgstr ""
 
-#: admin/admin.php:2002
+#: admin/admin.php:1990
 msgid ""
 "Ajax Load More <a href=\"https://connekthq.com/plugins/ajax-load-more/docs/"
 "callback-functions/\" target=\"_blank\">callback functions</a> were updated "
@@ -427,13 +423,13 @@ msgid ""
 "library to maintain compatibility."
 msgstr ""
 
-#: admin/admin.php:2025
+#: admin/admin.php:2013
 msgid ""
 "Check this box if Ajax Load More should remove all of its data* when the "
 "plugin is deleted."
 msgstr ""
 
-#: admin/admin.php:2026
+#: admin/admin.php:2014
 msgid "* Database Tables, Options and Repeater Templates"
 msgstr ""
 
@@ -742,7 +738,8 @@ msgstr ""
 #: admin/shortcode-builder/components/nextpage.php:15
 #: admin/shortcode-builder/components/nextpage.php:92
 #: admin/shortcode-builder/components/paging.php:15
-#: admin/shortcode-builder/components/paging.php:63
+#: admin/shortcode-builder/components/paging.php:64
+#: admin/shortcode-builder/components/paging.php:90
 #: admin/shortcode-builder/components/preloaded.php:15
 #: admin/shortcode-builder/components/rest-api.php:30
 #: admin/shortcode-builder/components/rest-api.php:105
@@ -779,7 +776,8 @@ msgstr ""
 #: admin/shortcode-builder/components/nextpage.php:19
 #: admin/shortcode-builder/components/nextpage.php:93
 #: admin/shortcode-builder/components/paging.php:19
-#: admin/shortcode-builder/components/paging.php:67
+#: admin/shortcode-builder/components/paging.php:65
+#: admin/shortcode-builder/components/paging.php:94
 #: admin/shortcode-builder/components/preloaded.php:19
 #: admin/shortcode-builder/components/rest-api.php:34
 #: admin/shortcode-builder/components/rest-api.php:109
@@ -1140,6 +1138,7 @@ msgid ""
 msgstr ""
 
 #: admin/shortcode-builder/components/filters.php:109
+#: admin/shortcode-builder/components/paging.php:56
 msgid "Scroll"
 msgstr ""
 
@@ -1153,6 +1152,7 @@ msgstr ""
 
 #: admin/shortcode-builder/components/filters.php:131
 #: admin/shortcode-builder/components/nextpage.php:98
+#: admin/shortcode-builder/components/paging.php:70
 msgid "Scroll Top"
 msgstr ""
 
@@ -1195,7 +1195,7 @@ msgid ""
 msgstr ""
 
 #: admin/shortcode-builder/components/nextpage.php:3
-#: admin/shortcode-builder/components/paging.php:120 core/functions.php:140
+#: admin/shortcode-builder/components/paging.php:147 core/functions.php:140
 msgid "Next Page"
 msgstr ""
 
@@ -1246,14 +1246,15 @@ msgid "Scroll users automatically to the next page on 'Load More' action."
 msgstr ""
 
 #: admin/shortcode-builder/components/nextpage.php:90
+#: admin/shortcode-builder/components/paging.php:62
 #: admin/shortcode-builder/shortcode-builder.php:377
 msgid "Enable Scrolling"
 msgstr ""
 
 #: admin/shortcode-builder/components/nextpage.php:99
 msgid ""
-"The scrolltop position of the window (used with scrolling and fwd/back "
-"browser buttons)."
+"The scrolltop position of the browser window (used with scrolling and fwd/"
+"back browser buttons)."
 msgstr ""
 
 #: admin/shortcode-builder/components/nextpage.php:108
@@ -1289,46 +1290,57 @@ msgid ""
 "The maximum amount of page menu items to show at a time. <br/.>0 = no maximum"
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:55
+#: admin/shortcode-builder/components/paging.php:57
+msgid ""
+"Move users to the top of the Ajax Load More container after a paging click "
+"event."
+msgstr ""
+
+#: admin/shortcode-builder/components/paging.php:71
+msgid ""
+"The scrolltop position of the browser window when scrolling back to top."
+msgstr ""
+
+#: admin/shortcode-builder/components/paging.php:82
 msgid "Controls"
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:56
+#: admin/shortcode-builder/components/paging.php:83
 msgid "Show first/last and next/previous buttons in the paging navigation."
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:78
+#: admin/shortcode-builder/components/paging.php:105
 #: core/classes/class.alm-noscript.php:167
 msgid "First Page"
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:78
-#: admin/shortcode-builder/components/paging.php:92
+#: admin/shortcode-builder/components/paging.php:105
+#: admin/shortcode-builder/components/paging.php:119
 msgid "Leave empty to not render button."
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:80
+#: admin/shortcode-builder/components/paging.php:107
 msgid "Label for the <span>First Page</span> button."
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:92
+#: admin/shortcode-builder/components/paging.php:119
 #: core/classes/class.alm-noscript.php:185
 msgid "Last Page"
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:94
+#: admin/shortcode-builder/components/paging.php:121
 msgid "Label for the <span>Last Page</span> button."
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:106
+#: admin/shortcode-builder/components/paging.php:133
 msgid "Previous Page"
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:108
+#: admin/shortcode-builder/components/paging.php:135
 msgid "Label for the <span>Previous Page</span> button."
 msgstr ""
 
-#: admin/shortcode-builder/components/paging.php:122
+#: admin/shortcode-builder/components/paging.php:149
 msgid "Label for the <span>Next Page</span> button."
 msgstr ""
 
@@ -2880,11 +2892,11 @@ msgstr ""
 msgid "Error creating repeater template directory"
 msgstr ""
 
-#: ajax-load-more.php:397
+#: ajax-load-more.php:399
 msgid "Viewing {post_count} of {total_posts} results."
 msgstr ""
 
-#: ajax-load-more.php:398
+#: ajax-load-more.php:400
 msgid "No results found."
 msgstr ""
 

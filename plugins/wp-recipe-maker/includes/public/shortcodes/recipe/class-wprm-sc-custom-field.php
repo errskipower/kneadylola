@@ -21,7 +21,7 @@ class WPRM_SC_Custom_Field extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-recipe-custom-field';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
 			),
@@ -30,17 +30,50 @@ class WPRM_SC_Custom_Field extends WPRM_Template_Shortcode {
 				'type' => 'dropdown',
 				'options' => 'custom_fields',
 			),
-			'text_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-			),
 			'image_size' => array(
 				'default' => 'thumbnail',
 				'type' => 'image_size',
+				'dependency' => array(
+					array(
+						'id' => 'key',
+						'value' => 'actual_values_set_in_parse_shortcode_below',
+					),
+				),
+				'dependency_compare' => 'OR',
 			),
 		);
+
+		$atts = array_merge( $atts, WPRM_Shortcode_Helper::get_label_container_atts() );
+		self::$attributes = $atts;
+
+		add_filter( 'wprm_template_parse_shortcode', array( __CLASS__, 'parse_shortcode' ), 10, 3 );
+
 		parent::init();
+	}
+
+	/**
+	 * Add dynamic shortcode attributes.
+	 *
+	 * @since	6.0.0
+	 * @param	array $shortcodes 	All shortcodes to parse.
+	 * @param	array $shortcode 	Shortcode getting parsed.
+	 * @param	array $atts 		Shortcode attributes.
+	 */
+	public static function parse_shortcode( $shortcodes, $shortcode, $attributes ) {
+		if ( 'wprm-recipe-custom-field' === $shortcode ) {
+			$custom_fields = class_exists( 'WPRM_Addons' ) && WPRM_Addons::is_active( 'custom-fields' ) ? WPRMPCF_Manager::get_custom_fields() : array();
+			
+			foreach ( $custom_fields as $key => $custom_field ) {
+				if ( 'image' === $custom_field['type'] ) {
+					$shortcodes[ $shortcode ]['image_size']['dependency'][] = array(
+						'id' => 'key',
+						'value' => $key,
+					);
+				}
+			}
+		}
+
+		return $shortcodes;
 	}
 
 	/**

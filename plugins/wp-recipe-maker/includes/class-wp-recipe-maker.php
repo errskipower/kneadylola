@@ -31,8 +31,8 @@ class WP_Recipe_Maker {
 	 * @since    1.0.0
 	 */
 	private function define_constants() {
-		define( 'WPRM_VERSION', '5.11.1' );
-		define( 'WPRM_PREMIUM_VERSION_REQUIRED', '5.5.0' );
+		define( 'WPRM_VERSION', '6.0.3' );
+		define( 'WPRM_PREMIUM_VERSION_REQUIRED', '6.0.0' );
 		define( 'WPRM_POST_TYPE', 'wprm_recipe' );
 		define( 'WPRM_DIR', plugin_dir_path( dirname( __FILE__ ) ) );
 		define( 'WPRM_URL', plugin_dir_url( dirname( __FILE__ ) ) );
@@ -70,6 +70,7 @@ class WP_Recipe_Maker {
 
 		// Priority.
 		require_once( WPRM_DIR . 'includes/public/class-wprm-settings.php' );
+		require_once( WPRM_DIR . 'includes/public/shortcodes/class-wprm-shortcode-helper.php' );
 
 		// API.
 		require_once( WPRM_DIR . 'includes/public/api/class-wprm-api-equipment.php' );
@@ -146,6 +147,7 @@ class WP_Recipe_Maker {
 			require_once( WPRM_DIR . 'includes/admin/tools/class-wprm-tools-find-parents.php' );
 			require_once( WPRM_DIR . 'includes/admin/tools/class-wprm-tools-find-ratings.php' );
 			require_once( WPRM_DIR . 'includes/admin/tools/class-wprm-tools-fix-comment-ratings.php' );
+			require_once( WPRM_DIR . 'includes/admin/tools/class-wprm-tools-refresh-video-metadata.php' );
 			require_once( WPRM_DIR . 'includes/admin/tools/class-wprm-tools-wpurp-ingredients.php' );
 			require_once( WPRM_DIR . 'includes/admin/tools/class-wprm-tools-wpurp-nutrition.php' );
 

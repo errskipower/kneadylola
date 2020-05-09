@@ -21,35 +21,16 @@ class WPRM_SC_Video extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-recipe-video';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
 			),
-			'header' => array(
-				'default' => '',
-				'type' => 'text',
-			),
-			'header_tag' => array(
-				'default' => 'h3',
-				'type' => 'dropdown',
-				'options' => 'header_tags',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
-			),
-			'header_style' => array(
-				'default' => 'bold',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
-			),
 		);
+
+		$atts = array_merge( WPRM_Shortcode_Helper::get_section_atts(), $atts );
+		unset( $atts['text_style'] );
+		self::$attributes = $atts;
+	
 		parent::init();
 	}
 
@@ -68,17 +49,7 @@ class WPRM_SC_Video extends WPRM_Template_Shortcode {
 		}
 
 		$output = '<div id="wprm-recipe-video-container-' . $recipe->id() . '" class="wprm-recipe-video-container">';
-
-		if ( $atts['header'] ) {
-			$classes = array(
-				'wprm-recipe-header',
-				'wprm-recipe-video-header',
-				'wprm-block-text-' . $atts['header_style'],
-			);
-
-			$tag = trim( $atts['header_tag'] );
-			$output .= '<' . $tag . ' class="' . implode( ' ', $classes ) . '">' . __( $atts['header'], 'wp-recipe-maker' ) . '</' . $tag . '>';
-		}
+		$output .= WPRM_Shortcode_Helper::get_section_header( $atts, 'video' );
 
 		$output .= '<div class="wprm-recipe-video">' . do_shortcode( $recipe->video() ) . '</div>';
 		$output .= '</div>';

@@ -21,38 +21,9 @@ class WPRM_SC_Ingredients extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-recipe-ingredients';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
-			),
-			'text_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-			),
-			'header' => array(
-				'default' => '',
-				'type' => 'text',
-			),
-			'header_tag' => array(
-				'default' => 'h3',
-				'type' => 'dropdown',
-				'options' => 'header_tags',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
-			),
-			'header_style' => array(
-				'default' => 'bold',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
-				'dependency' => array(
-					'id' => 'header',
-					'value' => '',
-					'type' => 'inverse',
-				),
 			),
 			'group_tag' => array(
 				'default' => 'h4',
@@ -134,6 +105,7 @@ class WPRM_SC_Ingredients extends WPRM_Template_Shortcode {
 				'type' => 'dropdown',
 				'options' => array(
 					'' => "Don't show",
+					'header' => 'Show selector in the header',
 					'before' => 'Show selector before the ingredients',
 					'after' => 'Show selector after the ingredients',
 					'both' => 'Show both systems at once',
@@ -145,6 +117,7 @@ class WPRM_SC_Ingredients extends WPRM_Template_Shortcode {
 				'options' => array(
 					'links' => 'Links',
 					'dropdown' => 'Dropdown',
+					'buttons' => 'Buttons',
 				),
 				'dependency' => array(
 					array(
@@ -156,6 +129,108 @@ class WPRM_SC_Ingredients extends WPRM_Template_Shortcode {
 						'id' => 'unit_conversion',
 						'value' => 'both',
 						'type' => 'inverse'
+					),
+				),
+			),
+			'unit_conversion_text_style' => array(
+				'default' => 'normal',
+				'type' => 'dropdown',
+				'options' => 'text_styles',
+				'dependency' => array(
+					array(
+						'id' => 'unit_conversion',
+						'value' => '',
+						'type' => 'inverse',
+					),
+					array(
+						'id' => 'unit_conversion',
+						'value' => 'both',
+						'type' => 'inverse'
+					),
+					array(
+						'id' => 'unit_conversion_style',
+						'value' => 'dropdown',
+						'type' => 'inverse',
+					),
+				),
+			),
+			'unit_conversion_separator' => array(
+				'default' => ' - ',
+				'type' => 'text',
+				'dependency' => array(
+					array(
+						'id' => 'unit_conversion',
+						'value' => '',
+						'type' => 'inverse',
+					),
+					array(
+						'id' => 'unit_conversion',
+						'value' => 'both',
+						'type' => 'inverse'
+					),
+					array(
+						'id' => 'unit_conversion_style',
+						'value' => 'links',
+					),
+				),
+			),
+			'unit_conversion_button_background' => array(
+				'default' => '#ffffff',
+				'type' => 'color',
+				'dependency' => array(
+					array(
+						'id' => 'unit_conversion',
+						'value' => '',
+						'type' => 'inverse',
+					),
+					array(
+						'id' => 'unit_conversion',
+						'value' => 'both',
+						'type' => 'inverse'
+					),
+					array(
+						'id' => 'unit_conversion_style',
+						'value' => 'buttons',
+					),
+				),
+			),
+			'unit_conversion_button_accent' => array(
+				'default' => '#333333',
+				'type' => 'color',
+				'dependency' => array(
+					array(
+						'id' => 'unit_conversion',
+						'value' => '',
+						'type' => 'inverse',
+					),
+					array(
+						'id' => 'unit_conversion',
+						'value' => 'both',
+						'type' => 'inverse'
+					),
+					array(
+						'id' => 'unit_conversion_style',
+						'value' => 'buttons',
+					),
+				),
+			),
+			'unit_conversion_button_radius' => array(
+				'default' => '3px',
+				'type' => 'size',
+				'dependency' => array(
+					array(
+						'id' => 'unit_conversion',
+						'value' => '',
+						'type' => 'inverse',
+					),
+					array(
+						'id' => 'unit_conversion',
+						'value' => 'both',
+						'type' => 'inverse'
+					),
+					array(
+						'id' => 'unit_conversion_style',
+						'value' => 'buttons',
 					),
 				),
 			),
@@ -179,7 +254,57 @@ class WPRM_SC_Ingredients extends WPRM_Template_Shortcode {
 					'value' => 'both',
 				),
 			),
+			'adjustable_servings' => array(
+				'default' => '',
+				'type' => 'dropdown',
+				'options' => array(
+					'' => "Don't show",
+					'header' => 'Show adjustable servings in the header',
+					'before' => 'Show adjustable servings before the ingredients',
+				),
+			),
+			'servings_text_style' => array(
+				'default' => 'normal',
+				'type' => 'dropdown',
+				'options' => 'text_styles',
+				'dependency' => array(
+					'id' => 'adjustable_servings',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'servings_button_background' => array(
+				'default' => '#ffffff',
+				'type' => 'color',
+				'dependency' => array(
+					'id' => 'adjustable_servings',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'servings_button_accent' => array(
+				'default' => '#333333',
+				'type' => 'color',
+				'dependency' => array(
+					'id' => 'adjustable_servings',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
+			'servings_button_radius' => array(
+				'default' => '3px',
+				'type' => 'size',
+				'dependency' => array(
+					'id' => 'adjustable_servings',
+					'value' => '',
+					'type' => 'inverse',
+				),
+			),
 		);
+
+		$atts = array_merge( WPRM_Shortcode_Helper::get_section_atts(), $atts );
+		self::$attributes = $atts;
+
 		parent::init();
 	}
 
@@ -203,24 +328,34 @@ class WPRM_SC_Ingredients extends WPRM_Template_Shortcode {
 			'wprm-block-text-' . $atts['text_style'],
 		);
 
+		// Args for optional unit conversion and adjustable servings.
+		$unit_conversion_atts = array(
+			'id' => $atts['id'],
+			'style' => $atts['unit_conversion_style'],
+			'text_style' => $atts['unit_conversion_text_style'],
+			'separator' => $atts['unit_conversion_separator'],
+			'button_background' => $atts['unit_conversion_button_background'],
+			'button_accent' => $atts['unit_conversion_button_accent'],
+			'button_radius' => $atts['unit_conversion_button_radius'],
+		);
+		$adjustable_servings_atts = array(
+			'id' => $atts['id'],
+			'text_style' => $atts['servings_text_style'],
+			'button_background' => $atts['servings_button_background'],
+			'button_accent' => $atts['servings_button_accent'],
+			'button_radius' => $atts['servings_button_radius'],
+		);
+
 		$output = '<div class="' . implode( ' ', $classes ) . '">';
+		$output .= WPRM_Shortcode_Helper::get_section_header( $atts, 'ingredients', array(
+			'unit_conversion_atts' => $unit_conversion_atts,
+			'adjustable_servings_atts' => $adjustable_servings_atts,
+		) );
 
-		if ( $atts['header'] ) {
-			$classes = array(
-				'wprm-recipe-header',
-				'wprm-recipe-ingredients-header',
-				'wprm-block-text-' . $atts['header_style'],
-			);
-
-			$tag = trim( $atts['header_tag'] );
-			$output .= '<' . $tag . ' class="' . implode( ' ', $classes ) . '">' . __( $atts['header'], 'wp-recipe-maker' ) . '</' . $tag . '>';
+		if ( 'before' === $atts['adjustable_servings'] ) {
+			$output .= WPRM_SC_Adjustable_Servings::shortcode( $adjustable_servings_atts );
 		}
-
 		if ( 'before' === $atts['unit_conversion'] ) {
-			$unit_conversion_atts = array(
-				'id' => $atts['id'],
-				'style' => $atts['unit_conversion_style'],
-			);
 			$output .= WPRM_SC_Unit_Conversion::shortcode( $unit_conversion_atts );
 		}
 
@@ -299,10 +434,6 @@ class WPRM_SC_Ingredients extends WPRM_Template_Shortcode {
 		}
 
 	 	if ( 'after' === $atts['unit_conversion'] ) {
-			$unit_conversion_atts = array(
-				'id' => $atts['id'],
-				'style' => $atts['unit_conversion_style'],
-			);
 			$output .= WPRM_SC_Unit_Conversion::shortcode( $unit_conversion_atts );
 		}
 

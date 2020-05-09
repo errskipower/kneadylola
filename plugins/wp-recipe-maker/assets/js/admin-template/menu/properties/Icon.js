@@ -59,7 +59,7 @@ export default class PropertyIcon extends Component {
                         }}>Set custom URL</a> | Select:
                         <div className="wprm-template-property-icon-select-container-icons">
                             {
-                                Object.keys(wprm_admin_template.icons).map((id, index) => {
+                                Object.keys( wprm_admin_template.icons ).sort().map((id, index) => {
                                     let icon = wprm_admin_template.icons[id];
                                     return (
                                         <span href="#"

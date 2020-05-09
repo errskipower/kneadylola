@@ -128,6 +128,17 @@ $recipe_ratings = array(
 						'value' => true,
 					),
 				),
+				array(
+					'id' => 'user_ratings_force_comment_scroll_to',
+					'name' => __( 'HTML Element to scroll to', 'wp-recipe-maker' ),
+					'description' => __( 'Optionally set a custom HTML element to scroll to. Can be useful when using lazy loading your comments, for example.', 'wp-recipe-maker' ),
+					'type' => 'text',
+					'default' => '',
+					'dependency' => array(
+						'id' => 'features_comment_ratings',
+						'value' => true,
+					),
+				),
 			),
 			'dependency' => array(
 				'id' => 'features_user_ratings',

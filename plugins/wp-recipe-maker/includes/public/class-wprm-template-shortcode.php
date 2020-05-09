@@ -28,8 +28,17 @@ class WPRM_Template_Shortcode {
 			// Register shortcode in WordPress.
 			add_shortcode( $shortcode, array( get_called_class(), 'shortcode' ) );
 
-			// Add to list of all shortcodes.
+			// Add to list of all shortcodes if not deprecated.
 			WPRM_Template_Shortcodes::$shortcodes[ $shortcode ] = static::$attributes;
+		}
+	}
+	
+	public static function init_deprecated() {
+		$shortcode = static::$shortcode;
+
+		if ( $shortcode ) {
+			// Only register in WordPress.
+			add_shortcode( $shortcode, array( get_called_class(), 'shortcode' ) );
 		}
 	}
 

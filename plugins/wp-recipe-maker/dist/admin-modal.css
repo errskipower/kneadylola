@@ -10,7 +10,7 @@
 
 .wprm-button-required{opacity:0.4 !important;cursor:help !important}
 
-.wprm-admin-icon{opacity:0.5;margin-top:2px}.wprm-admin-icon:hover{opacity:1;cursor:pointer}.wprm-admin-icon.wprm-admin-icon-hidden{opacity:0.1;cursor:default}
+.wprm-admin-icon{opacity:0.5;margin-top:2px}.wprm-admin-icon:hover{opacity:1;cursor:pointer}.wprm-admin-icon.wprm-admin-icon-hidden{opacity:0.1;cursor:default}.wprm-admin-icon-help{display:inline-block;margin-top:0;margin-left:5px;border:1px solid #444;border-radius:100%;opacity:1;width:16px;height:16px;text-align:center;font-size:12px}.wprm-admin-icon-help svg{width:10px;height:9px;margin-bottom:2px}.wprm-admin-icon-help:hover{background-color:#444}.wprm-admin-icon-help:hover svg g,.wprm-admin-icon-help:hover svg path{fill:white}
 
 .wprm-admin-loader{display:inline-block;width:10px;height:10px;border:2px solid rgba(200,200,200,0.3);border-radius:50%;border-top-color:#444;animation:spin 1s ease-in-out infinite;-webkit-animation:spin 1s ease-in-out infinite}@keyframes spin{to{-webkit-transform:rotate(360deg)}}@-webkit-keyframes spin{to{-webkit-transform:rotate(360deg)}}
 

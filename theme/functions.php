@@ -186,6 +186,11 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 require get_template_directory() . '/inc/walker-nav-menu.php';
 
 /**
+ * Custom Bulma Comment Walker.
+ */
+require get_template_directory() . '/inc/walker-comment.php';
+
+/**
  * Filter the excerpt "read more" string.
  *
  * @param string $more "Read more" excerpt string.
@@ -195,3 +200,26 @@ function wpdocs_excerpt_more($more) {
     return ' ...';
 }
 add_filter( 'excerpt_more', 'wpdocs_excerpt_more' );
+
+/**
+ * Functions which enhance the WPRM custom theme by hooking into WordPress.
+ */
+require get_template_directory() . '/inc/template-recipe.php';
+
+function no_prefix_archive_title( $title ) {
+    if ( is_category() ) {
+        $title = single_cat_title( '', false );
+    } elseif ( is_tag() ) {
+        $title = single_tag_title( '', false );
+    } elseif ( is_author() ) {
+        $title = '<span class="vcard">' . get_the_author() . '</span>';
+    } elseif ( is_post_type_archive() ) {
+        $title = post_type_archive_title( '', false );
+    } elseif ( is_tax() ) {
+        $title = single_term_title( '', false );
+    }
+  
+    return $title;
+}
+ 
+add_filter( 'get_the_archive_title', 'no_prefix_archive_title' );

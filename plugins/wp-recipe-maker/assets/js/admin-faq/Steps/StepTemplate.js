@@ -9,8 +9,8 @@ export default class StepTemplate extends Component {
         super(props);
 
         let template = false;
-        if ( wprm_admin_template.templates.hasOwnProperty( 'compact' ) ) {
-            template = wprm_admin_template.templates['compact'];
+        if ( wprm_admin_template.templates.hasOwnProperty( 'chic' ) ) {
+            template = wprm_admin_template.templates['chic'];
         }
 
         this.state = {

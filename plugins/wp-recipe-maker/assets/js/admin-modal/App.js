@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-Modal.setAppElement( '#wprm-admin-modal' );
+
+// Only if modal is on page.
+if ( document.getElementById( 'wprm-admin-modal' ) ) {
+    Modal.setAppElement( '#wprm-admin-modal' );
+}
 
 import '../../css/admin/modal/app.scss';
 import '../../css/admin/modal/general/fields.scss';

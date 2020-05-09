@@ -7,6 +7,8 @@
  * @package kneadylola-emroth
  */
 
+ const MAX_LARGE_POST_COUNT = 3;
+
 ?>
 
 <div id="primary" class="content-area">
@@ -33,9 +35,9 @@
           * If you want to override this in a child theme, then include a file
           * called content-___.php (where ___ is the Post Type name) and that will be used instead.
           */
-        if (get_post_type() === 'post' && $post_count > 3 && !is_singular()):
-          if ($post_count === 4): ?>
-            <div class="columns is-relative">
+        if (get_post_type() === 'post' && $post_count > MAX_LARGE_POST_COUNT && !is_singular()):
+          if ($post_count === (MAX_LARGE_POST_COUNT + 1)): ?>
+            <div class="columns is-multiline is-relative">
           <?php
           endif;
           // show 3 most recent posts, then thumbnail posts for the rest
@@ -54,7 +56,7 @@
 
       endwhile;
 
-      if ($post_count > 3): 
+      if ($post_count > MAX_LARGE_POST_COUNT): 
         echo do_shortcode('[ajax_load_more container_type="div" post_type="post" posts_per_page="6" offset="4" pause="true" images_loaded="true" scroll="false"]');
       ?>
         

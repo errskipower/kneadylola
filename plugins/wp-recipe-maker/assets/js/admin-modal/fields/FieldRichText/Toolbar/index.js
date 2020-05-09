@@ -120,6 +120,7 @@ const Toolbar = (props) => {
 				<ButtonCharacter character="⅛" />
 				<Spacer />
 				<ButtonCharacter character="°" />
+				<ButtonCharacter character="Ø" />
 			</div>
 		</ModalToolbar>
 	);

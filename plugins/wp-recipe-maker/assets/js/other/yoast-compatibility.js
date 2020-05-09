@@ -5,7 +5,7 @@ WPRecipeMakerYoast = function() {
 
 WPRecipeMakerYoast.prototype.wprmContentModification = function( data ) {
     // Remove block editor blocks.
-    data = data.replace(/<!-- wp:wp-recipe-maker\/recipe.*?\/wp:wp-recipe-maker\/[^\s]* -->/gms, '');
+    data = data.replace(/<!-- wp:wp-recipe-maker\/recipe[\s\S]*?\/wp:wp-recipe-maker\/[^\s]* -->/gm, '');
 
     // Remove classic editor shortcode.
     data = data.replace(/(<p>)?\s*\[[^\[]*wprm-recipe[^\]]*\]\s*(<\/p>)?/ig, '');

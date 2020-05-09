@@ -1482,6 +1482,7 @@ function alm_admin_init(){
 		'alm_general_settings'
 	);
 
+	/*
 	add_settings_field(  // Scroll to top on load
 		'_alm_scroll_top',
 		__('Top of Page', 'ajax-load-more' ),
@@ -1489,6 +1490,7 @@ function alm_admin_init(){
 		'ajax-load-more',
 		'alm_general_settings'
 	);
+	*/
 
 	add_settings_field(  // Uninstall
 		'_alm_uninstall',
@@ -1852,23 +1854,9 @@ function alm_btn_color_callback() {
 			$html .= '<button style="cursor: pointer;" type="button" class="alm-load-more-btn'. $loadingClass .'" id="test-alm-button">'.apply_filters('alm_button_label', __('Older Posts', 'ajax-load-more')).'</button>';
 
 		 $html .= '</div>';
-	 $html .= '</div>';
+	$html .= '</div>';
 
-    echo $html;
-    ?>
-    
-    <script>
-	   // Button Preview Toggle
-	   // Toggle button state if not Infinite loading style
-    	jQuery('button#test-alm-button').click(function() {
-	    	var almWrap = document.querySelector('.alm-btn-wrap .ajax-load-more-wrap');
-	    	if (!almWrap.classList.contains('infinite')){
-    			jQuery(this).toggleClass('loading');
-    		}
-	   });
-    </script>
-    
-    <?php
+   echo $html;
 }
 
 

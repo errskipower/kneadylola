@@ -45,7 +45,7 @@ class WPRM_Assets {
 
 		// Only include scripts when not AMP page.
 		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
-			wp_register_script( 'wprm-public', WPRM_URL . 'dist/public-' . $template_mode . '.js', array( 'jquery' ), WPRM_VERSION, true );
+			wp_register_script( 'wprm-public', WPRM_URL . 'dist/public-' . $template_mode . '.js', array(), WPRM_VERSION, true );
 			wp_localize_script( 'wprm-public', 'wprm_public', self::localize_public() );
 		}
 		
@@ -78,6 +78,7 @@ class WPRM_Assets {
 		return array(
 			'settings' => array(
 				'features_comment_ratings' => WPRM_Settings::get( 'features_comment_ratings' ),
+				'template_color_comment_rating' => WPRM_Settings::get( 'template_color_comment_rating' ),
 			),
 			'home_url' => WPRM_Compatibility::get_home_url(),
 			'permalinks' => get_option( 'permalink_structure' ),

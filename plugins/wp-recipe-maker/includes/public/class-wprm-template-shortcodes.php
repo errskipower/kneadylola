@@ -152,16 +152,25 @@ class WPRM_Template_Shortcodes {
 	 */
 	private static function load_shortcodes() {
 		$dirs = array(
+			WPRM_DIR . 'includes/public/shortcodes/deprecated',
 			WPRM_DIR . 'includes/public/shortcodes/general',
 			WPRM_DIR . 'includes/public/shortcodes/recipe',
 		);
+
+		$loaded_files = array();
 
 		foreach ( $dirs as $dir ) {
 			if ( $handle = opendir( $dir ) ) {
 				while ( false !== ( $file = readdir( $handle ) ) ) {
 					preg_match( '/^class-wprm-sc-(.*?).php/', $file, $match );
 					if ( isset( $match[1] ) ) {
-						require_once( $dir . '/' . $match[0] );
+						$file = $match[0];
+						
+						// Do it like this to prevent loading deprecated twice when doing updates incorrectly.
+						if ( ! in_array( $file, $loaded_files ) ) {
+							require_once( $dir . '/' . $file );
+							$loaded_files[] = $file;
+						}
 					}
 				}
 			}
@@ -207,45 +216,7 @@ class WPRM_Template_Shortcodes {
 		$defaults = array();
 
 		foreach ( $shortcodes as $shortcode => $attributes ) {
-			// Tags container.
-			if ( 'wprm-recipe-tags-container' === $shortcode ) {
-				$taxonomies = WPRM_Taxonomies::get_taxonomies();
-	
-				foreach ( $taxonomies as $taxonomy => $options ) {
-					$key = substr( $taxonomy, 5 );
-					$shortcodes[ $shortcode ]['label_' . $key] = array(
-						'default' => $options['singular_name'],
-						'type' => 'text',
-					);
-					$shortcodes[ $shortcode ]['icon_' . $key] = array(
-						'default' => '',
-						'type' => 'icon',
-					);
-				}
-			}
-
-			// Times container.
-			if ( 'wprm-recipe-times-container' === $shortcode ) {
-				$times = array(
-					'prep' => __( 'Prep Time', 'wp-recipe-maker' ),
-					'cook' => __( 'Cook Time', 'wp-recipe-maker' ),
-					'custom' => __( 'Custom Time', 'wp-recipe-maker' ),
-					'total' => __( 'Total Time', 'wp-recipe-maker' ),
-				);
-	
-				foreach ( $times as $key => $label ) {
-					if ( 'custom' !== $key ) {
-						$shortcodes[ $shortcode ]['label_' . $key] = array(
-							'default' => $label,
-							'type' => 'text',
-						);
-					}
-					$shortcodes[ $shortcode ]['icon_' . $key] = array(
-						'default' => '',
-						'type' => 'icon',
-					);
-				}
-			}
+			$shortcodes = apply_filters( 'wprm_template_parse_shortcode', $shortcodes, $shortcode, $attributes );
 			
 			$defaults[ $shortcode ] = array();
 			foreach ( $shortcodes[ $shortcode ] as $attribute => $options ) {

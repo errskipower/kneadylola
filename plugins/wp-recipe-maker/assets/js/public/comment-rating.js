@@ -1,60 +1,108 @@
-let comment_ratings_setting = typeof window.wprm_public !== 'undefined' ? wprm_public.settings.features_comment_ratings : wprm_admin.settings.features_comment_ratings;
+window.WPRecipeMaker.rating = {
+	init: () => {
+		const ratingFormElem = document.querySelector( '.comment-form-wprm-rating' );
 
-if (comment_ratings_setting) {
-	jQuery(document).ready(function($) {
-		if (jQuery('.wprm-recipe-container').length > 0 || jQuery('body.wp-admin').length > 0) {
-			jQuery('.comment-form-wprm-rating').show();
+		if ( ratingFormElem ) {
+			const recipes = document.querySelectorAll( '.wprm-recipe-container' );
+			const admin = document.querySelector( 'body.wp-admin' );
 
-			var color = jQuery('.comment-form-wprm-rating').data('color');
-
-			jQuery(document).on('mouseenter', '.comment-form-wprm-rating .wprm-rating-star', function() {
-				jQuery(this).prevAll().andSelf().each(function() {
-					jQuery(this)
-						.addClass('wprm-rating-star-selecting-filled')
-						.find('polygon')
-						.css('fill', color);
-				});
-				jQuery(this).nextAll().each(function() {
-					jQuery(this)
-						.addClass('wprm-rating-star-selecting-empty')
-						.find('polygon')
-						.css('fill', 'none');
-				});
-			});
-			jQuery(document).on('mouseleave', '.comment-form-wprm-rating .wprm-rating-star', function() {
-				jQuery(this).siblings().andSelf().each(function() {
-					jQuery(this)
-						.removeClass('wprm-rating-star-selecting-filled wprm-rating-star-selecting-empty')
-						.find('polygon')
-						.css('fill', '');
-				});
-			});
-			jQuery(document).on('click', '.comment-form-wprm-rating .wprm-rating-star', function() {
-				var star = jQuery(this),
-					rating = star.data('rating'),
-					input = star.parents('.comment-form-wprm-rating').find('#wprm-comment-rating'),
-					current_rating = input.val();
-
-				if (current_rating == rating) {
-					input.val('');
-
-					jQuery(this).siblings('').andSelf().each(function() {
-						jQuery(this).removeClass('rated');
-					});
-				} else {
-					input.val(rating);
-
-					jQuery(this).prevAll().andSelf().each(function() {
-						jQuery(this).addClass('rated');
-					});
-					jQuery(this).nextAll().each(function() {
-						jQuery(this).removeClass('rated');
-					});
-				}
-			});
-		} else {
-			// Hide when no recipe is found.
-			jQuery('.comment-form-wprm-rating').hide();
+			if ( recipes.length > 0 || admin ) {
+				ratingFormElem.style.display = '';
+			} else {
+				// Hide when no recipe is found.
+				ratingFormElem.style.display = 'none';
+			}
 		}
-	});
+	},
+	settings: {
+		enabled: typeof window.wprm_public !== 'undefined' ? wprm_public.settings.features_comment_ratings : wprm_admin.settings.features_comment_ratings,
+		color: typeof window.wprm_public !== 'undefined' ? wprm_public.settings.template_color_comment_rating : 'black',
+	},
+	onMouseEnter: ( el ) => {
+		const rating = parseInt( el.dataset.rating );
+		const stars = WPRecipeMaker.rating.getStars( el );
+
+		if ( stars ) {
+			stars.map( ( star, index ) => {
+				const iconParts = [ ...star.querySelectorAll( 'polygon' ) ];
+
+				if ( index < rating ) {
+					star.classList.add( 'wprm-rating-star-selecting-filled' );
+					iconParts.map( ( iconPart ) => { iconPart.style.fill = WPRecipeMaker.rating.settings.color } );
+				} else {
+					star.classList.add( 'wprm-rating-star-selecting-empty' );
+					iconParts.map( ( iconPart ) => { iconPart.style.fill = 'none' } );
+				}
+			} );
+		}
+	},
+	onMouseLeave: ( el ) => {
+		const stars = WPRecipeMaker.rating.getStars( el );
+
+		if ( stars ) {
+			stars.map( ( star ) => {
+				const iconParts = [ ...star.querySelectorAll( 'polygon' ) ];
+
+				star.classList.remove( 'wprm-rating-star-selecting-filled' );
+				star.classList.remove( 'wprm-rating-star-selecting-empty' );
+				iconParts.map( ( iconPart ) => { iconPart.style.fill = '' } );
+			} );
+		}
+	},
+	onClick: ( el ) => {
+		const stars = WPRecipeMaker.rating.getStars( el );
+		const input = WPRecipeMaker.rating.getInput( el );
+
+		let newRating = parseInt( el.dataset.rating );
+		const oldRating = parseInt( input.value );
+
+		if ( newRating === oldRating ) {
+			input.value = '';
+			newRating = 0;
+		} else {
+			input.value = newRating;
+		}
+
+		if ( stars ) {
+			stars.map( ( star, index ) => {
+				if ( index < newRating ) {
+					star.classList.add( 'rated' );
+				} else {
+					star.classList.remove( 'rated' );
+				}
+			} );
+		}
+	},
+	getStars: ( el ) => {
+		let stars = [];
+
+		Array.prototype.filter.call( el.parentNode.children, ( child ) => {
+			if ( child.classList.contains( 'wprm-rating-star' ) ) {
+				const rating = parseInt( child.dataset.rating ) - 1;
+				stars[ rating ] = child;
+			}
+		});
+
+		if ( 5 === stars.length ) {
+			return stars;
+		} else {
+			return false;
+		}
+	},
+	getInput: ( el ) => {
+		const container = el.closest( '.comment-form-wprm-rating' );
+		return container.querySelector( '#wprm-comment-rating' );
+	},
+};
+
+ready(() => {
+	window.WPRecipeMaker.rating.init();
+});
+
+function ready( fn ) {
+    if (document.readyState != 'loading'){
+        fn();
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
 }

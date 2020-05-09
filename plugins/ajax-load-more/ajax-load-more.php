@@ -7,14 +7,14 @@ Text Domain: ajax-load-more
 Author: Darren Cooney
 Twitter: @KaptonKaos
 Author URI: https://connekthq.com 
-Version: 5.3.0
+Version: 5.3.1
 License: GPL
 Copyright: Darren Cooney & Connekt Media
 */
 
 
-define('ALM_VERSION', '5.3.0');
-define('ALM_RELEASE', 'April 22, 2020');
+define('ALM_VERSION', '5.3.1');
+define('ALM_RELEASE', 'May 1, 2020');
 define('ALM_STORE_URL', 'https://connekthq.com');
 
 
@@ -380,7 +380,7 @@ if( !class_exists('AjaxLoadMore') ):
    		}
 
    		// Prevent loading of unnessasry posts - move user to top of page
-   		$scrolltop = (!isset($options['_alm_scroll_top']) || $options['_alm_scroll_top'] != '1') ? 'false' : 'true';
+   		//$scrolltop = (!isset($options['_alm_scroll_top']) || $options['_alm_scroll_top'] !== '1') ? 'false' : 'true';
    		
    		
    		// Localized JS variables
@@ -390,8 +390,10 @@ if( !class_exists('AjaxLoadMore') ):
    			array(
    				'ajaxurl' => admin_url('admin-ajax.php'),
    				'alm_nonce' => wp_create_nonce( "ajax_load_more_nonce" ),
+					'rest_api' => esc_url_raw( rest_url() ),
+					'rest_nonce' => wp_create_nonce( 'wp_rest' ),
    				'pluginurl' => ALM_URL,
-   				'scrolltop' => $scrolltop,
+   				//'scrolltop' => $scrolltop,
    				'speed' => apply_filters('alm_speed', 200),
    				'ga_debug' => apply_filters('alm_ga_debug', 'false'),
    				'results_text' => apply_filters('alm_display_results', __('Viewing {post_count} of {total_posts} results.', 'ajax-load-more')),

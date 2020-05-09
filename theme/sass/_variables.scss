@@ -1,0 +1,32 @@
+// Set your brand colors
+$pink: #d59696;
+$grey-dark: hsl(0, 0%, 20%);
+$grey-lighter: hsl(0, 0%, 86%);
+
+// Update Bulma's global variables
+$family-sans-serif: "Arvo", sans-serif;
+$family-display: "Italiana", sans-serif;
+$family-primary: $family-sans-serif;
+$family-secondary: $family-display;
+$primary: $pink;
+$primary-light: findLightColor($primary);
+$text: $grey-dark;
+$link: $text;
+$size-0: 5rem;
+
+
+$navbar-height: 1.5rem;
+$navbar-item-hover-background-color: transparent;
+$navbar-dropdown-item-hover-background-color: transparent;
+$navbar-item-hover-color: $primary;
+$navbar-dropdown-item-hover-color: $primary;
+$navbar-dropdown-border-top: 2px solid $primary;
+$navbar-font-size: 12px;
+
+$footer-background-color: $primary;
+
+$input-border-color: $grey-lighter;
+$input-focus-border-color: $primary;
+$input-focus-box-shadow-color: rgba($primary, .25);
+
+$content-heading-weight: 400;

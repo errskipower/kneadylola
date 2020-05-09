@@ -11,7 +11,7 @@ if ( ! function_exists( 'kneadylola_emroth_posted_on' ) ) :
   /**
    * Prints HTML with meta information for the current post-date/time.
    */
-  function kneadylola_emroth_posted_on() {
+  function kneadylola_emroth_posted_on($is_link = true) {
     $time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
     if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
       $time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time>';
@@ -25,11 +25,14 @@ if ( ! function_exists( 'kneadylola_emroth_posted_on' ) ) :
       esc_html( get_the_modified_date() )
     );
 
-    $posted_on = sprintf(
+    $posted_on = $is_link ? sprintf(
       /* translators: %s: post date. */
       esc_html_x( '%s', 'post date', 'kneadylola-emroth' ),
       '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
-    );
+    ) : sprintf(
+      /* translators: %s: post date. */
+      esc_html_x( '%s', 'post date', 'kneadylola-emroth' ), $time_string
+      );
 
     echo '<span class="posted-on">' . $posted_on . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
@@ -60,17 +63,11 @@ if ( ! function_exists( 'kneadylola_emroth_entry_footer' ) ) :
     // Hide category and tag text for pages.
     if ( 'post' === get_post_type() ) {
       /* translators: used between list items, there is a space after the comma */
-      $categories_list = get_the_category_list( esc_html__( ', ', 'kneadylola-emroth' ) );
-      if ( $categories_list ) {
-        /* translators: 1: list of categories. */
-        printf( '<span class="cat-links">' . esc_html__( 'Posted in %1$s', 'kneadylola-emroth' ) . '</span>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-      }
-
-      /* translators: used between list items, there is a space after the comma */
-      $tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'kneadylola-emroth' ) );
+      $tag_span_open = '<span class="tag-link">';
+      $tags_list = get_the_tag_list( $tag_span_open, esc_html_x( '', 'list item separator', 'kneadylola-emroth' ) . '</span>' . $tag_span_open, '</span>' );
       if ( $tags_list ) {
         /* translators: 1: list of tags. */
-        printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'kneadylola-emroth' ) . '</span>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        printf( '<div class="tags tag-link-list">' . esc_html__( '%1$s', 'kneadylola-emroth' ) . '</div>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
       }
     }
 
@@ -92,23 +89,6 @@ if ( ! function_exists( 'kneadylola_emroth_entry_footer' ) ) :
       );
       echo '</span>';
     }
-
-    edit_post_link(
-      sprintf(
-        wp_kses(
-          /* translators: %s: Name of current post. Only visible to screen readers */
-          __( 'Edit <span class="screen-reader-text">%s</span>', 'kneadylola-emroth' ),
-          array(
-            'span' => array(
-              'class' => array(),
-            ),
-          )
-        ),
-        wp_kses_post( get_the_title() )
-      ),
-      '<span class="edit-link">',
-      '</span>'
-    );
   }
 endif;
 
@@ -127,7 +107,7 @@ if ( ! function_exists( 'kneadylola_emroth_post_thumbnail' ) ) :
     if ( is_singular() ) :
       ?>
 
-      <div class="post-thumbnail">
+      <div class="post-thumbnail post-thumbnail-single">
         <?php the_post_thumbnail(); ?>
       </div><!-- .post-thumbnail -->
 
@@ -150,6 +130,61 @@ if ( ! function_exists( 'kneadylola_emroth_post_thumbnail' ) ) :
 
       <?php
     endif; // End is_singular().
+  }
+endif;
+
+
+if ( ! function_exists( 'kneadylola_emroth_entry_navigation' ) ) :
+  /**
+   * Prints HTML with a post button
+   */
+  function the_post_navigation_button($post, $is_previous) {
+    if (!$post) {
+      return;
+    }
+
+    $title = get_the_title($post);
+    $link = get_the_permalink($post);
+    $icon = $is_previous ? 'fa-caret-left' : 'fa-caret-right';
+    ?>
+
+    <span class="level-item">
+      <a href="<?php echo $link ?>" alt="<?php echo $title ?>" class="button is-small is-primary is-outlined is-uppercase">
+        <?php if (!$is_previous): ?>
+          <span><?php echo $title; ?></span>
+        <?php endif; ?>
+        <span class="icon is-small">
+          <i class="fas <?php echo $icon; ?>"></i>
+        </span>
+        <?php if ($is_previous): ?>
+          <span><?php echo $title; ?></span>
+        <?php endif; ?>
+      </a>
+    </span>
+
+    <?php
+  }
+endif;
+
+
+if ( ! function_exists( 'kneadylola_emroth_entry_navigation' ) ) :
+  /**
+   * Prints HTML with next and previous post navigation
+   */
+  function kneadylola_emroth_entry_navigation() {
+    // Hide post navigation for pages
+    if ( 'post' === get_post_type() ) {
+      $previous_post = get_previous_post();
+      $next_post = get_next_post();
+
+      ?>
+      <div class="level post-nav">
+        <div class="level-left"><?php the_post_navigation_button($previous_post, true); ?></div>
+        <div class="level-right"><?php the_post_navigation_button($next_post, false); ?></div>
+
+      </div>
+      <?php
+    }
   }
 endif;
 

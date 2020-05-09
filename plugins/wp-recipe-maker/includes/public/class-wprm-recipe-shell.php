@@ -49,6 +49,7 @@ class WPRM_Recipe_Shell {
 			'author_display' => 'default',
 			'author_name' => 'custom' === WPRM_Settings::get( 'recipe_author_display_default' ) ? WPRM_Settings::get( 'recipe_author_custom_default' ) : '',
 			'author_link' => '',
+			'rating' => false,
 			'servings' => 0,
 			'servings_unit' => '',
 			'cost' => '',
@@ -106,6 +107,25 @@ class WPRM_Recipe_Shell {
 		}
 
 		return $default;
+	}
+
+	/**
+	 * Get the recipe author.
+	 *
+	 * @since	6.0.0
+	 */
+	public function author() {
+		$author = '';
+
+		switch ( $this->author_display() ) {
+			case 'same':
+				$author = WPRM_Settings::get( 'recipe_author_same_name' );
+				break;
+			default:
+				$author = $this->author_name();
+		}
+
+		return $author;
 	}
 
 	/**

@@ -4,6 +4,7 @@ if (!global._babelPolyfill) { require('babel-polyfill'); }
 import 'whatwg-fetch';
 
 import './public/comment-rating';
+import './public/media-toggle';
 import './public/print';
 import './public/smooth-scroll';
 

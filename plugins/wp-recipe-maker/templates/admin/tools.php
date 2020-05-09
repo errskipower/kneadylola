@@ -50,6 +50,17 @@
 			</tr>
 			<tr>
 				<th scope="row">
+					<?php esc_html_e( 'Refresh Video Metadata', 'wp-recipe-maker' ); ?>
+				</th>
+				<td>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=wprm_refresh_video_metadata' ) ); ?>" class="button" id="tools_refresh_video_metadata"><?php esc_html_e( 'Refresh Video Metadata', 'wp-recipe-maker' ); ?></a>
+					<p class="description" id="tagline-tools_refresh_video_metadata">
+						<?php esc_html_e( 'Refresh the video metadata for all recipes on your website.', 'wp-recipe-maker' ); ?>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">
 					<?php esc_html_e( 'Reset Settings', 'wp-recipe-maker' ); ?>
 				</th>
 				<td>

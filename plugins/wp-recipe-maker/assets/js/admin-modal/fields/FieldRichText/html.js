@@ -11,7 +11,11 @@ const ELEMENT_TAGS = {
         noFollow: el.getAttribute('rel') && el.getAttribute('rel').includes('nofollow') ? true : false,
     }),
     P: () => ({ type: 'paragraph' }),
-    'WPRM-CODE': () => ({ type: 'code' }),
+    'WPRM-CODE': el => {
+        return {
+            type: 'code',
+        }
+    },
 }
 
 const TEXT_TAGS = {
@@ -71,6 +75,11 @@ export const deserialize = ( el, singleLine = false ) => {
         }
 
         let element = jsx('element', attrs, children)
+
+        // Special case: wprm-code.
+        if ( 'WPRM-CODE' === nodeName ) {
+            element.children = [{ text: el.innerHTML }];
+        }
 
         if ( 0 === element.children.length ) {
             element.children = [{ text: '' }];

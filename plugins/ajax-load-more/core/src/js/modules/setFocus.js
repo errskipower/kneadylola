@@ -15,6 +15,7 @@ let setFocus = (alm, element = null, total = 0, is_filtering = false) => {
 		return false;
 	}
 	
+	
 	// WooCommerce Add-on
 	if(alm.addons.woocommerce){
 		moveFocus(false, false, element, false, alm.isSafari);
@@ -35,7 +36,7 @@ let setFocus = (alm, element = null, total = 0, is_filtering = false) => {
          // Standard ALM
    	   moveFocus(alm.init, alm.addons.preloaded, element, is_filtering, alm.isSafari);                  
       }
-	} else if(!alm.transition_container && alm.container_type === 'table'){
+	} else if(!alm.transition_container){
 		
 		// Table Layout
    	moveFocus(alm.init, alm.addons.preloaded, element[0], is_filtering, alm.isSafari);
@@ -71,9 +72,10 @@ let moveFocus = (init = true, preloaded = 'false', element, is_filtering = false
    element = (is_array) ? element[0] : element;
    */   
    
-   // Set tabIndex on `.alm-reveal`
+   // Set tabIndex and style on element
 	element.setAttribute('tabIndex', '-1');
    element.style.outline = 'none';
+   
    
    // Get Parent container
    // If `.alm-listing` set parent to element
@@ -86,11 +88,12 @@ let moveFocus = (init = true, preloaded = 'false', element, is_filtering = false
 	if(scrollContainer){				
 		let container = document.querySelector(scrollContainer);
 		if(container){
-			let left = container.scrollLeft;
-			let top = container.scrollTop;
-			element.focus();
-			container.scrollLeft = left;
-			container.scrollTop = top;			
+			//let left = container.scrollLeft;
+			//let top = container.scrollTop;
+			//element.focus();
+			//container.scrollLeft = left;
+			//container.scrollTop = top;	
+			element.focus({ preventScroll: true });		
 		}		
 	} 
 	
@@ -98,12 +101,15 @@ let moveFocus = (init = true, preloaded = 'false', element, is_filtering = false
 	else {   
 		let x = window.scrollX;
 		let y = window.scrollY;
+		
+		element.focus({ preventScroll: true });
+		
 		// Safari fix for window movement if Y = 0
-		if(isSafari){
-			window.scrollTo(x, y);
-			y = (y === 0) ? 1 : y;
-		}
-		element.focus();
-		window.scrollTo(x, y);
+		//if(isSafari){
+			//window.scrollTo(x, y);
+			//y = (y === 0) ? 1 : y;
+		//}
+		//element.focus();
+		//window.scrollTo(x, y);
 	}
 } 

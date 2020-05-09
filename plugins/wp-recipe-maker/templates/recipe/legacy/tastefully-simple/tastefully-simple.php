@@ -127,7 +127,7 @@
 	 <?php echo WPRM_Template_Helper::unit_conversion( $recipe ); ?>
 	</div>
 	<?php endif; // Ingredients. ?>
-	<?php if ( WPRM_Settings::get( 'integration_mediavine_ad' ) ) { echo '<div class="mv_slot_target" data-slot="recipe"></div>'; } ?>
+	<?php if ( WPRM_Settings::get( 'integration_mediavine_ad' ) ) { echo '<div class="mv_slot_target" data-slot="recipe" data-render-default="true"></div>'; } ?>
 	<?php
 	$instructions = $recipe->instructions();
 	if ( count( $instructions ) > 0 ) : ?>

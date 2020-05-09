@@ -66,11 +66,21 @@
 		?>
 		<?php if ( WPRM_Settings::get( 'print_remove_links' ) ) : ?>
 			<script>
-				jQuery(document).ready(function($) {
-					jQuery('a:not(.wprm-recipe-link)').replaceWith(function(){
-						return jQuery("<span>" + jQuery(this).html() + "</span>");
-					});
+				ready(function() {
+					var links = document.querySelectorAll( 'a:not(.wprm-recipe-link)' );
+
+					for (var i = 0; i < links.length; i++) {
+						links[i].outerHTML = '<span>' + links[i].innerHTML + '</span>';
+					}
 				});
+
+				function ready( fn ) {
+					if (document.readyState != 'loading'){
+						fn();
+					} else {
+						document.addEventListener('DOMContentLoaded', fn);
+					}
+				}
 			</script>
 		<?php endif; ?>
 	</head>

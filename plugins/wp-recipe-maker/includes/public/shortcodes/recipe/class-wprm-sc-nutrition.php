@@ -21,14 +21,9 @@ class WPRM_SC_Nutrition extends WPRM_Template_Shortcode {
 	public static $shortcode = 'wprm-recipe-nutrition';
 
 	public static function init() {
-		self::$attributes = array(
+		$atts = array(
 			'id' => array(
 				'default' => '0',
-			),
-			'text_style' => array(
-				'default' => 'normal',
-				'type' => 'dropdown',
-				'options' => 'text_styles',
 			),
 			'field' => array(
 				'default' => '',
@@ -52,6 +47,10 @@ class WPRM_SC_Nutrition extends WPRM_Template_Shortcode {
 				'type' => 'toggle',
 			),
 		);
+
+		$atts = array_merge( $atts, WPRM_Shortcode_Helper::get_label_container_atts() );
+		self::$attributes = $atts;
+
 		parent::init();
 	}
 
@@ -107,8 +106,10 @@ class WPRM_SC_Nutrition extends WPRM_Template_Shortcode {
 				'wprm-block-text-' . $atts['text_style'],
 			);
 
-			$output .= $atts['unit_separator'] . '<span class="' . implode( ' ', $classes ) . '">' . $nutrient['unit'] . '</span>';
+			$output = '<span class="wprm-recipe-nutrition-with-unit">' . $output . $atts['unit_separator'] . '<span class="' . implode( ' ', $classes ) . '">' . $nutrient['unit'] . '</span></span>';
 		}
+
+		$output = WPRM_Shortcode_Helper::get_label_container( $atts, array( 'nutrition', $atts['field'] ), $output );
 
 		return apply_filters( parent::get_hook(), $output, $atts, $recipe );
 	}

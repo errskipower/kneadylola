@@ -41,6 +41,7 @@ class WPRM_Modal {
 		if ( 'toplevel_page_et_bloom_options' === $screen->id
 			|| 'et_theme_builder' === substr( $screen->id, -16 )
 			|| 'bulletproof-security' === substr( $screen->id, 0, 20 )
+			|| 'hustle' === $screen->parent_base
 			|| 'admin_page_newsletter' === substr( $screen->id, 0, 21 ) ) {
 			return;
 		}
@@ -63,6 +64,7 @@ class WPRM_Modal {
 		if ( 'toplevel_page_et_bloom_options' === $screen->id
 			|| 'et_theme_builder' === substr( $screen->id, -16 )
 			|| 'bulletproof-security' === substr( $screen->id, 0, 20 )
+			|| 'hustle' === $screen->parent_base
 			|| 'admin_page_newsletter' === substr( $screen->id, 0, 21 ) ) {
 			return;
 		}

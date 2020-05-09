@@ -14,14 +14,22 @@
     <a href="<?php the_permalink(); ?>" rel="bookmark">
       <?php the_post_thumbnail('post-thumbnail', ['class' => 'post-thumbnail-image']); ?>
       <div class="post-thumbnail-content has-text-centered">
-        <span class="tag is-primary is-light is-uppercase">
-          <?php 
-          foreach (get_the_category() as $category): 
-            echo $category->name;
-          endforeach;
-          ?>
-        </span>
-        <h4 class="post-thumbnail-title title is-4 has-text-white has-text-weight-normal"><?php the_title(); ?></h4>
+        <?php if (is_front_page()): ?>
+          <span class="tag is-primary is-light is-uppercase">
+            <?php 
+            foreach (get_the_category() as $category): 
+              echo $category->name;
+            endforeach;
+            ?>
+          </span>
+        <?php else: ?>
+          <span class="is-uppercase is-size-7 letter-spacing-1 has-text-white">
+            <?php 
+            kneadylola_emroth_posted_on(false);
+            ?>
+          </span>
+        <?php endif; ?>
+        <h4 class="post-thumbnail-title title <?php echo is_front_page() ? 'is-4' : 'is-5'; ?> has-text-white has-text-weight-normal"><?php the_title(); ?></h4>
       </div>
     </a>
   </figure>

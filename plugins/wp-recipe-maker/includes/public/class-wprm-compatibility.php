@@ -152,7 +152,7 @@ class WPRM_Compatibility {
 	 */
 	public static function mediavine_ingredients_ad( $output ) {
 		if ( WPRM_Settings::get( 'integration_mediavine_ad' ) ) {
-			$output = $output . '<div class="mv_slot_target" data-slot="recipe"></div>';
+			$output = $output . '<div class="mv_slot_target" data-slot="recipe" data-render-default="true"></div>';
 		}
 
 		return $output;

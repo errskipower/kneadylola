@@ -80,7 +80,6 @@ if( !class_exists('ALM_SHORTCODE') ):
    		$atts = ($default_atts) ? array_merge($default_atts, $atts) : $atts;
    		
    		
-         
          // Extact shortcode arrtibutes
    		extract(shortcode_atts(array(
 	   		'nested' => false,
@@ -128,7 +127,7 @@ if( !class_exists('ALM_SHORTCODE') ):
       		'nextpage' => false,
       		'nextpage_post_id' => '',      		
       		'nextpage_urls' => 'true',
-      		'nextpage_scroll' => 'true:30',
+      		'nextpage_scroll' => 'false:30',
       		'nextpage_pageviews' => 'true',
       		'nextpage_start' => 1,
       		'previous_post' => false,
@@ -149,6 +148,7 @@ if( !class_exists('ALM_SHORTCODE') ):
    			'paging_controls' => 'false',
    			'paging_show_at_most' => '7',
    			'paging_classes' => '',
+   			'paging_scroll' => false,
    			'paging_first_label' => apply_filters('alm_paging_first_label', ''),
    			'paging_last_label' => apply_filters('alm_paging_last_label', ''),
    			'paging_previous_label' => apply_filters('alm_paging_previous_label', '&laquo;'),
@@ -544,6 +544,7 @@ if( !class_exists('ALM_SHORTCODE') ):
 									
 					if(is_archive()){
 						$obj = get_queried_object();
+						print_r($obj);
 						if(isset($obj->taxonomy) && isset($obj->slug)){
 						   $taxonomy = $obj->taxonomy;
 						   $taxonomy_terms = $obj->slug;
@@ -888,17 +889,17 @@ if( !class_exists('ALM_SHORTCODE') ):
    
    	   		// Paging Add-on
    	         if(has_action('alm_paging_installed') && $paging === 'true'){
-   	   		   $paging_return = apply_filters(
+	   	         $paging_return = apply_filters(
    	   		   	'alm_paging_shortcode',
    	   		   	$paging,
    	   		   	$paging_controls,
    	   		   	$paging_show_at_most,
-   	   		   	$paging_classes,   	   		   	
+   	   		   	$paging_classes,   		   	
                      $paging_first_label,
                      $paging_last_label,
                      $paging_previous_label,
                      $paging_next_label,
-                     $options
+                     $paging_scroll
    	   		   );
    	   			$ajaxloadmore .= $paging_return;
    	         }
@@ -1124,12 +1125,14 @@ if( !class_exists('ALM_SHORTCODE') ):
    	   		$ajaxloadmore .= (!empty($lang)) ? ' data-lang="'.$lang.'"' : '';
    	   		
    	   		// Scroll
-   	   		$ajaxloadmore .= ' data-scroll="'.$scroll.'"';
-   	   		if($scroll === 'true'){
-      	   		$ajaxloadmore .= ' data-scroll-distance="'.$scroll_distance.'"';
-      	   		$ajaxloadmore .= (!empty($scroll_container)) ? ' data-scroll-container="'.$scroll_container.'"' : '';
-      	   		$ajaxloadmore .= ' data-max-pages="'.$max_pages.'"';
-      	   		$ajaxloadmore .= (!empty($pause_override)) ? ' data-pause-override="'.$pause_override.'"' : '';
+   	   		if($paging !== 'true') {
+	   	   		$ajaxloadmore .= ' data-scroll="'.$scroll.'"';
+	   	   		if($scroll === 'true'){
+	      	   		$ajaxloadmore .= ' data-scroll-distance="'.$scroll_distance.'"';
+	      	   		$ajaxloadmore .= (!empty($scroll_container)) ? ' data-scroll-container="'.$scroll_container.'"' : '';
+	      	   		$ajaxloadmore .= ' data-max-pages="'.$max_pages.'"';
+	      	   		$ajaxloadmore .= (!empty($pause_override)) ? ' data-pause-override="'.$pause_override.'"' : '';
+	   	   		}
    	   		}
    	   		
    	   		// Pause

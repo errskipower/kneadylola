@@ -8,7 +8,8 @@
 
 
 // Polyfills
-require("@babel/polyfill/noConflict");
+require('@babel/polyfill/noConflict');
+require('focus-options-polyfill');
 require('./helpers/polyfills.js');
 
 
@@ -44,8 +45,9 @@ import almDebug from './modules/almDebug';
 import getScrollPercentage from './modules/getScrollPercentage';
 import srcsetPolyfill from './helpers/srcsetPolyfill';
 import { showPlaceholder, hidePlaceholder } from './modules/placeholder';
-import { wooGetURL, wooGetContent, wooInit, woocommerce } from './modules/woocommerce';
-import singlePostHTML from './modules/singleposts';
+import { singlePostHTML, singlePostCache } from './addons/singleposts';
+import { wooGetURL, wooGetContent, wooInit, woocommerce } from './addons/woocommerce';
+import { createSEOAttributes } from './addons/seo';
 
 
 // Global filtering var
@@ -160,9 +162,10 @@ let alm_is_filtering = false;
       alm.integration.woocommerce = (alm.listing.dataset.woocommerce) ? alm.listing.dataset.woocommerce : false;
       alm.integration.woocommerce = (alm.integration.woocommerce === 'true') ? true : false;
 
-
       // Addon Shortcode Params
-      alm.addons.woocommerce = (alm.localize.woocommerce) ? true : false; // Woocommerce add-on
+      
+      // Woocommerce add-on
+      alm.addons.woocommerce = (alm.localize.woocommerce) ? true : false; 
       if(alm.addons.woocommerce){
       	alm.addons.woocommerce_columns = (alm.localize.woocommerce.columns) ? parseInt(alm.localize.woocommerce.columns) : 3; // Woocommerce columns
       	alm.addons.woocommerce_paged = (alm.localize.woocommerce.paged) ? parseInt(alm.localize.woocommerce.paged) : 1; // Woocommerce Paged
@@ -178,56 +181,70 @@ let alm_is_filtering = false;
 
       }
       
-            
-      alm.addons.cache = alm.listing.dataset.cache; // Cache add-on
+      // Cache add-on
+      alm.addons.cache = alm.listing.dataset.cache; 
       alm.addons.cache = (alm.addons.cache === undefined) ? false : alm.addons.cache;
-      alm.addons.cache_id = alm.listing.dataset.cacheId;
-      alm.addons.cache_path = alm.listing.dataset.cachePath;
-      alm.addons.cache_logged_in = alm.listing.dataset.cacheLoggedIn;
-      alm.addons.cache_logged_in = (alm.addons.cache_logged_in === undefined) ? false : alm.addons.cache_logged_in;
+      if(alm.addons.cache === 'true'){
+	      alm.addons.cache_id = alm.listing.dataset.cacheId;
+	      alm.addons.cache_path = alm.listing.dataset.cachePath;
+	      alm.addons.cache_logged_in = alm.listing.dataset.cacheLoggedIn;
+	      alm.addons.cache_logged_in = (alm.addons.cache_logged_in === undefined) ? false : alm.addons.cache_logged_in;
+      }
 		
-      alm.addons.cta = alm.listing.dataset.cta; // CTA add-on
-      alm.addons.cta_position = alm.listing.dataset.ctaPosition;
-      alm.addons.cta_repeater = alm.listing.dataset.ctaRepeater;
-      alm.addons.cta_theme_repeater = alm.listing.dataset.ctaThemeRepeater;
+		// CTA add-on
+      alm.addons.cta = alm.listing.dataset.cta; 
+      if(alm.addons.cta === 'true'){ 
+	      alm.addons.cta_position = alm.listing.dataset.ctaPosition;
+	      alm.addons.cta_repeater = alm.listing.dataset.ctaRepeater;
+	      alm.addons.cta_theme_repeater = alm.listing.dataset.ctaThemeRepeater;
+      }
 
-      alm.addons.nextpage = alm.listing.dataset.nextpage; // Nextpage add-on
-      alm.addons.nextpage_urls = alm.listing.dataset.nextpageUrls;
-      alm.addons.nextpage_scroll = alm.listing.dataset.nextpageScroll;
-      alm.addons.nextpage_pageviews = alm.listing.dataset.nextpagePageviews;
-      alm.addons.nextpage_post_id = alm.listing.dataset.nextpagePostId;
-      alm.addons.nextpage_startpage = alm.listing.dataset.nextpageStartpage;
-
-      alm.addons.single_post = alm.listing.dataset.singlePost; // Previous Post add-on
-      alm.addons.single_post_id = alm.listing.dataset.singlePostId;
-      alm.addons.single_post_order = alm.listing.dataset.singlePostOrder;
-      alm.addons.single_post_init_id = alm.listing.dataset.singlePostId;
-      alm.addons.single_post_taxonomy = alm.listing.dataset.singlePostTaxonomy;
-      alm.addons.single_post_excluded_terms = alm.listing.dataset.singlePostExcludedTerms;
-      alm.addons.single_post_progress_bar = alm.listing.dataset.singlePostProgressBar;
-      alm.addons.single_post_target = alm.listing.dataset.singlePostTarget;
-
-      alm.addons.comments = alm.listing.dataset.comments; // Comments add-on      
-      alm.addons.comments_post_id = alm.listing.dataset.comments_post_id; // current post id
-      alm.addons.comments_per_page = alm.listing.dataset.comments_per_page;
-      alm.addons.comments_per_page = (alm.addons.comments_per_page === undefined) ? '5' : alm.addons.comments_per_page;
-      alm.addons.comments_type = alm.listing.dataset.comments_type;
-      alm.addons.comments_style = alm.listing.dataset.comments_style;
-      alm.addons.comments_template = alm.listing.dataset.comments_template;
-      alm.addons.comments_callback = alm.listing.dataset.comments_callback;
+		// Nextpage add-on
+      alm.addons.nextpage = alm.listing.dataset.nextpage;
+      if(alm.addons.nextpage === 'true'){ 
+	      alm.addons.nextpage_urls = alm.listing.dataset.nextpageUrls;
+	      alm.addons.nextpage_scroll = alm.listing.dataset.nextpageScroll;
+	      alm.addons.nextpage_pageviews = alm.listing.dataset.nextpagePageviews;
+	      alm.addons.nextpage_post_id = alm.listing.dataset.nextpagePostId;
+	      alm.addons.nextpage_startpage = alm.listing.dataset.nextpageStartpage;
+		}
+		
+		// Single Posts add-on
+      alm.addons.single_post = alm.listing.dataset.singlePost;
+      if(alm.addons.single_post === 'true'){ 
+	      alm.addons.single_post_id = alm.listing.dataset.singlePostId;
+	      alm.addons.single_post_order = alm.listing.dataset.singlePostOrder;
+	      alm.addons.single_post_init_id = alm.listing.dataset.singlePostId;
+	      alm.addons.single_post_taxonomy = alm.listing.dataset.singlePostTaxonomy;
+	      alm.addons.single_post_excluded_terms = alm.listing.dataset.singlePostExcludedTerms;
+	      alm.addons.single_post_progress_bar = alm.listing.dataset.singlePostProgressBar;
+	      alm.addons.single_post_target = alm.listing.dataset.singlePostTarget;
+      }
+		
+		// Comments add-on
+      alm.addons.comments = alm.listing.dataset.comments;
+      if(alm.addons.comments === 'true'){   
+	      alm.addons.comments_post_id = alm.listing.dataset.comments_post_id; // current post id
+	      alm.addons.comments_per_page = alm.listing.dataset.comments_per_page;
+	      alm.addons.comments_per_page = (alm.addons.comments_per_page === undefined) ? '5' : alm.addons.comments_per_page;
+	      alm.addons.comments_type = alm.listing.dataset.comments_type;
+	      alm.addons.comments_style = alm.listing.dataset.comments_style;
+	      alm.addons.comments_template = alm.listing.dataset.comments_template;
+	      alm.addons.comments_callback = alm.listing.dataset.comments_callback;
+      }
 
       alm.addons.tabs = alm.listing.dataset.tabs;
       
       alm.addons.filters = alm.listing.dataset.filters;
 
-      alm.addons.seo = alm.listing.dataset.seo; // SEO add-on
-
+      alm.addons.seo = alm.listing.dataset.seo;
+		
+		// Preloaded
       alm.addons.preloaded = alm.listing.dataset.preloaded; // Preloaded add-on
       alm.addons.preloaded_amount = (alm.listing.dataset.preloadedAmount) ? alm.listing.dataset.preloadedAmount : 0;
       alm.is_preloaded = (alm.listing.dataset.isPreloaded === 'true') ? true : false;
-
-      alm.addons.paging = alm.listing.dataset.paging; // Paging add-on      
-
+		
+		// Users
       alm.addons.users = (alm.listing.dataset.users === 'true') ? true : false; // Users add-on
       if (alm.addons.users) { // Override paging params for users
          alm.orginal_posts_per_page = alm.listing.dataset.usersPerPage;
@@ -253,13 +270,15 @@ let alm_is_filtering = false;
          alm.extensions.acf = false;
       }
       
+      // Term Query
       alm.extensions.term_query = alm.listing.dataset.termQuery; // TERM QUERY
       alm.extensions.term_query_taxonomy = alm.listing.dataset.termQueryTaxonomy;
       alm.extensions.term_query_hide_empty = alm.listing.dataset.termQueryHideEmpty;
       alm.extensions.term_query_number = alm.listing.dataset.termQueryNumber;
       alm.extensions.term_query = (alm.extensions.term_query === 'true') ? true : false;
       
-      /* Paging */
+      // Paging
+      alm.addons.paging = alm.listing.dataset.paging; // Paging add-on  
       if (alm.addons.paging === 'true') {
          alm.addons.paging = true;
          alm.addons.paging_init = true;
@@ -272,6 +291,9 @@ let alm_is_filtering = false;
          alm.addons.paging_previous_label = alm.listing.dataset.pagingPreviousLabel;
          alm.addons.paging_next_label = alm.listing.dataset.pagingNextLabel;
          alm.addons.paging_last_label = alm.listing.dataset.pagingLastLabel;
+         
+         alm.addons.paging_scroll = (alm.listing.dataset.pagingScroll) ? alm.listing.dataset.pagingScroll : false;
+         alm.addons.paging_scrolltop = (alm.listing.dataset.pagingScrolltop) ? parseInt(alm.listing.dataset.pagingScrolltop) : 100;
          
          // If preloaded, pause ALM	
          alm.pause = (alm.addons.preloaded === 'true') ? true : alm.pause;
@@ -404,7 +426,7 @@ let alm_is_filtering = false;
          alm.addons.nextpage_urls = 'true';
       }
       if (alm.addons.nextpage_scroll === undefined) {
-         alm.addons.nextpage_scroll = '250:30';
+         alm.addons.nextpage_scroll = 'false:30';
       }
       if (alm.addons.nextpage_pageviews === undefined) {
          alm.addons.nextpage_pageviews = 'true';
@@ -555,6 +577,7 @@ let alm_is_filtering = false;
          
          // Reset button state
          alm.button.disabled = false;
+         alm.button.style.display = '';
       }
 
 
@@ -828,7 +851,7 @@ let alm_is_filtering = false;
             if(alm.addons.single_post && alm.addons.single_post_target){
 	            // Single Posts 
 	            data = singlePostHTML(response, alm.addons.single_post_target);
-	            
+	            singlePostCache(alm, data.html);
             }
             else if(alm.addons.woocommerce){
 	            // WooCommerce 
@@ -1150,8 +1173,8 @@ let alm_is_filtering = false;
                   if (!alm.transition_container) { // No transition container
 	                 
 	                 	alm.el = alm.html;                     
-                     reveal = (alm.container_type === 'table') ? tableWrap(alm.html) : almDomParser(alm.html, 'text/html');
-
+                     reveal = (alm.container_type === 'table') ? tableWrap(alm.html) : stripEmptyNodes(almDomParser(alm.html, 'text/html'));
+                     
                   } else { // Standard container
 
                      let pagenum;
@@ -1161,7 +1184,7 @@ let alm_is_filtering = false;
                      let preloaded_class = (alm.is_preloaded) ? ' alm-preloaded' : '';
 							
 							
-                     // SEO and Filter Paged
+                     // Init, SEO and Filter Paged
                      if (alm.init && (alm.start_page > 1 || alm.addons.filters_startpage > 0)) {	                     
                         // loop through items and break into separate .alm-reveal divs for paging       
 
@@ -1185,12 +1208,12 @@ let alm_is_filtering = false;
                         
 								
 								// Slice data array into individual pages (array)
-                        for (var i = 0; i < total; i += posts_per_page) {
+                        for (let i = 0; i < total; i += posts_per_page) {
                            return_data.push(data.slice(i, posts_per_page + i));
                         }
 
                         // Loop return_data array to build .alm-reveal containers
-                        for (var k = 0; k < return_data.length; k++) {
+                        for (let k = 0; k < return_data.length; k++) {
 
                            let p = (alm.addons.preloaded === 'true') ? 1 : 0; // Add 1 page if items are preloaded.
                            let alm_reveal = document.createElement('div');
@@ -1200,17 +1223,8 @@ let alm_is_filtering = false;
                               pagenum = (k + 1 + p); // > Paged
 
 										if(alm.addons.seo){ // SEO
-	                              if (alm.addons.seo_permalink === 'default') {
-												// Default Permalinks
-												alm_reveal.setAttribute('class', 'alm-reveal' + seo_class + alm.tcc);
-												alm_reveal.dataset.url = alm.canonical_url + querystring + '&paged=' + pagenum;
-												alm_reveal.dataset.page = pagenum;
-	                              } else {
-												// Pretty Permalinks
-												alm_reveal.setAttribute('class', 'alm-reveal' + seo_class + alm.tcc);
-												alm_reveal.dataset.url = alm.canonical_url + alm.addons.seo_leading_slash + 'page/' + pagenum + alm.addons.seo_trailing_slash + querystring;
-												alm_reveal.dataset.page = pagenum;
-	                              }
+											alm_reveal = createSEOAttributes(alm, alm_reveal, querystring, seo_class, pagenum);
+											
                               }
                               
                               if(alm.addons.filters){ // Filters
@@ -1222,15 +1236,11 @@ let alm_is_filtering = false;
                            } else {
 	                           	                           
                               // First Page                               
-                              if(alm.addons.seo){
-	                              // SEO
-	                              alm_reveal.setAttribute('class', 'alm-reveal' + seo_class + alm.tcc);
-		                           alm_reveal.dataset.url = alm.canonical_url + querystring;
-		                           alm_reveal.dataset.page = '1';
+                              if(alm.addons.seo){ // SEO
+		                           alm_reveal = createSEOAttributes(alm, alm_reveal, querystring, seo_class, 1);
 		                           
                               }                              
-                              if(alm.addons.filters){
-	                              // Filters
+                              if(alm.addons.filters){ // Filters
                               	alm_reveal.setAttribute('class', 'alm-reveal' + filters_class + preloaded_class + alm.tcc);
 											alm_reveal.dataset.url = alm.canonical_url + alm.AjaxLoadMore.buildFilterURL(querystring, 0);
 											alm_reveal.dataset.page = '1';			
@@ -1276,20 +1286,8 @@ let alm_is_filtering = false;
                            pagenum = (alm.page + 1 + p2);
 
                            if (alm.addons.seo) {
-                              // SEO
-                              if (alm.addons.seo_permalink === 'default') {
-	                              // Default Permalinks
-	                              reveal.setAttribute('class', 'alm-reveal' + seo_class + alm.tcc);
-		                           reveal.dataset.url = alm.canonical_url + querystring + '&paged=' + pagenum;
-		                           reveal.dataset.page = pagenum;
-                                 
-                              } else {
-	                              // Pretty Permalinks
-	                              reveal.setAttribute('class', 'alm-reveal' + seo_class + alm.tcc);
-		                           reveal.dataset.url = alm.canonical_url + alm.addons.seo_leading_slash + 'page/' + pagenum + alm.addons.seo_trailing_slash + querystring;
-		                           reveal.dataset.page = pagenum;
-                                 
-                              }
+	                           // SEO
+                              reveal = createSEOAttributes(alm, reveal, querystring, seo_class, pagenum);
 
                            } else if (alm.addons.filters) {
                               // Filters                                                            
@@ -1313,15 +1311,14 @@ let alm_is_filtering = false;
                         } else {
 
                            if (alm.addons.seo) {
-                              // SEO [Page 1]                              
-                              reveal.setAttribute('class', 'alm-reveal' + seo_class + alm.tcc);
-                              reveal.dataset.url = alm.canonical_url + querystring;
-                              reveal.dataset.page = '1';
+	                           // SEO [Page 1]                              
+                              reveal = createSEOAttributes(alm, reveal, querystring, seo_class, 1);
                               
                            }
                            else {
                               // Basic ALM                 
-                              reveal.setAttribute('class', 'alm-reveal' + alm.tcc);                              
+                              reveal.setAttribute('class', 'alm-reveal' + alm.tcc); 
+                                                           
                            }
 
                         }
@@ -1345,12 +1342,8 @@ let alm_is_filtering = false;
 	               	let nextPageNum = alm.page + 2;
 	               	
 							// Set button data attributes
-							
-							// Page
-							alm.button.dataset.page = nextPageNum;
-							
-							// URL
-							let nextPage = alm.addons.woocommerce_paged_urls[nextPageNum - 1];
+							alm.button.dataset.page = nextPageNum; // Page
+							let nextPage = alm.addons.woocommerce_paged_urls[nextPageNum - 1]; // URL
 	               	alm.button.dataset.url = (nextPage) ? nextPage : '';
 
 	               	alm.AjaxLoadMore.transitionEnd();
@@ -1363,9 +1356,7 @@ let alm_is_filtering = false;
 	               	// ALM Done
 	                  if (nextPageNum > parseInt(alm.addons.woocommerce_pages)) {
 	                     alm.AjaxLoadMore.triggerDone();
-	                 
 	                  }
-		               
 	               	
 	               })().catch((e) => {
 		               console.log(e);
@@ -1424,9 +1415,11 @@ let alm_is_filtering = false;
 						(async function() {
 							await almMasonry(alm, alm.init, alm_is_filtering);
 							alm.masonry_init = false;
+							alm.AjaxLoadMore.triggerWindowResize();
 							alm.AjaxLoadMore.transitionEnd();
+							alm_is_filtering = false;
 							if (typeof almComplete === 'function') {
-	                  	window.almComplete(alm);
+	                  	window.almComplete(alm); 
 	                  }
 						})().catch((e) => {
    						console.log('There was an error with ALM Masonry');
@@ -1540,14 +1533,8 @@ let alm_is_filtering = false;
                	window.almComplete(alm);
                }  
                
-               // Filters Complete
-               if(alm_is_filtering && alm.addons.filters){                  
-                  // Filters Complete            
-                  if (typeof almFilterComplete === 'function') { // Standard Filtering
-                     window.almFilterComplete(); 
-                  }
-                  
-                  // Filter Add-on Complete
+					// Filters Add-on Complete
+               if(alm_is_filtering && alm.addons.filters){ 
                   if (typeof almFiltersAddonComplete === "function") { // Filters Add-on
                      window.almFiltersAddonComplete(el);
                   }
@@ -1577,7 +1564,7 @@ let alm_is_filtering = false;
                      alm.AjaxLoadMore.triggerDone();
                   }
                }
-               // End ALM Done               
+               // End ALM Done   
                                       
             });
             // End ALM Loaded
@@ -1590,43 +1577,7 @@ let alm_is_filtering = false;
           */
          else {        
 
-            if (!alm.addons.paging) {
-               // Add .done class, reset btn text
-               setTimeout(function() {
-                  alm.button.classList.remove('loading');
-                  alm.button.classList.add('done');
-               }, alm.speed);
-               alm.AjaxLoadMore.resetBtnText();
-            }
-            
-            // almComplete
-            if (typeof almComplete === 'function' && alm.transition !== 'masonry') {
-            	window.almComplete(alm);
-            }
-            
-            // Filters Complete
-            if(alm_is_filtering && alm.addons.filters){                  
-               // Filters Complete            
-               if (typeof almFilterComplete === 'function') { // Standard Filtering
-                  almFilterComplete();
-               }
-               
-               // Filter Add-on Complete
-               if (typeof almFiltersAddonComplete === "function") { // Filters Add-on
-                  almFiltersAddonComplete(el);
-               }
-               alm_is_filtering = false;
-            }          
-            
-            // Tabs Complete
-            if(alm.addons.tabs){
-               // Tabs Complete            
-               if (typeof almTabsComplete === 'function') { // Standard Filtering
-                  almTabsComplete();
-               }	
-            }
-
-            alm.AjaxLoadMore.triggerDone(); // ALM Done
+            alm.AjaxLoadMore.noresults();
 
          }         
 
@@ -1648,11 +1599,9 @@ let alm_is_filtering = false;
 			
 			
 			// Set Focus for A11y
-			setFocus(alm, reveal, total, alm_is_filtering); 
-         
-                
-         // Comment Reply Fix
-         // commentReplyFix(alm.addons.comments, alm.listing);   
+			if (alm.transition !== 'masonry') {
+				setFocus(alm, reveal, total, alm_is_filtering); 
+			}  
          
          
          // Remove filtering class
@@ -1664,6 +1613,50 @@ let alm_is_filtering = false;
          // Set init flag
          alm.init = false;
 
+      };
+      
+      
+      
+      /**
+	    * noresults
+       * Functions run when no results are returned.
+       *
+       * @since 5.3.1
+       */
+      alm.AjaxLoadMore.noresults = function(){
+	      
+	      if (!alm.addons.paging) {
+            // Add .done class, reset btn text
+            setTimeout(function() {
+               alm.button.classList.remove('loading');
+               alm.button.classList.add('done');
+            }, alm.speed);
+            alm.AjaxLoadMore.resetBtnText();
+         }
+         
+         // almComplete
+         if (typeof almComplete === 'function' && alm.transition !== 'masonry') {
+         	window.almComplete(alm);
+         }
+         
+         // Filters Add-on Complete
+         if(alm_is_filtering && alm.addons.filters){ 
+            if (typeof almFiltersAddonComplete === "function") { // Filters Add-on
+               almFiltersAddonComplete(el);
+            }
+            alm_is_filtering = false;
+         }          
+         
+         // Tabs Complete
+         if(alm.addons.tabs){
+            // Tabs Complete            
+            if (typeof almTabsComplete === 'function') { // Standard Filtering
+               almTabsComplete();
+            }	
+         }
+
+         alm.AjaxLoadMore.triggerDone(); // ALM Done
+         
       };
 
 		
@@ -1781,6 +1774,7 @@ let alm_is_filtering = false;
          }, alm.speed);
          
       };
+
 
 
       /**
@@ -2052,12 +2046,31 @@ let alm_is_filtering = false;
        *
        * @since 2.1.2
        */
-
       alm.AjaxLoadMore.isVisible = function() {
          // Check for a width and height to determine visibility     
          alm.visible = (alm.main.clientWidth > 0 && alm.main.clientHeight > 0) ? true : false;
          return alm.visible;
       };
+      
+      
+      
+      /**
+	    * triggerWindowResize
+       * Trigger a window resize browser function
+       *
+       * @since 5.3.1
+       */
+      alm.AjaxLoadMore.triggerWindowResize = function(){
+			if (typeof (Event) === 'function') {
+				// modern browsers
+				window.dispatchEvent(new Event('resize'));
+			} else {
+				//This will be executed on old browsers and especially IE
+				var resizeEvent = window.document.createEvent('UIEvents');
+				resizeEvent.initUIEvent('resize', true, false, window, 0);
+				window.dispatchEvent(resizeEvent);
+			}
+      }
 
 
 

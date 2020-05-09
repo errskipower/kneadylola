@@ -1,7 +1,7 @@
 .wprm-recipe {
     margin: 20px auto;
     background-color: #fafafa; /* wprm_background type=color */
-    font-family: Helvetica, sans-serif; /* wprm_main_font_family type=font */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; /* wprm_main_font_family type=font */
     font-size: 0.9em; /* wprm_main_font_size type=font_size */
     line-height: 1.5em; /* wprm_main_line_height type=font_size */
     color: #333333; /* wprm_main_text type=color */
@@ -11,7 +11,7 @@
     color: #3498db; /* wprm_link type=color */
 }
 .wprm-recipe p, .wprm-recipe li {
-    font-family: Helvetica, sans-serif; /* wprm_main_font_family type=font */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; /* wprm_main_font_family type=font */
     font-size: 1em !important;
     line-height: 1.5em !important; /* wprm_main_line_height type=font_size */
 }
@@ -31,7 +31,7 @@
 }
 .wprm-recipe .wprm-recipe-name,
 .wprm-recipe .wprm-recipe-header {
-    font-family: Helvetica, sans-serif; /* wprm_header_font_family type=font */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; /* wprm_header_font_family type=font */
     color: #000000; /* wprm_header_text type=color */
     line-height: 1.3em; /* wprm_header_line_height type=font_size */
 }
@@ -41,8 +41,8 @@
 .wprm-recipe h4,
 .wprm-recipe h5,
 .wprm-recipe h6 {
-    font-family: Helvetica, sans-serif; /* wprm_header_font_family type=font */
-    color: #000000; /* wprm_header_text type=color */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; /* wprm_header_font_family type=font */
+    color: #212121; /* wprm_header_text type=color */
     line-height: 1.3em; /* wprm_header_line_height type=font_size */
     margin: 0 !important;
     padding: 0 !important;
