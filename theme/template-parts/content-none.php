@@ -11,10 +11,10 @@
 
 <section class="no-results not-found">
   <header class="page-header">
-    <h1 class="page-title"><?php esc_html_e( 'Nothing Found', 'kneadylola-emroth' ); ?></h1>
+    <h1 class="page-title entry-title title has-text-weight-normal is-2 has-text-centered"><?php esc_html_e( 'Nothing Found', 'kneadylola-emroth' ); ?></h1>
   </header><!-- .page-header -->
 
-  <div class="page-content">
+  <div class="page-content content has-text-centered">
     <?php
     if ( is_home() && current_user_can( 'publish_posts' ) ) :
 

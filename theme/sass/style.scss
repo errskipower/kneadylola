@@ -338,6 +338,30 @@ cite {
   }
 }
 
+div.wpcf7 {
+  .wpcf7-validation-errors {
+    @extend .notification;
+    @extend .is-light;
+    @extend .is-warning;
+    border: none;
+    margin: 2em 0 1rem;
+  }
+
+  .wpcf7-mail-sent-ng {
+    @extend .notification;
+    @extend .is-light;
+    @extend .is-danger;
+    border: none;
+    margin: 2.5em 0 1rem;
+  }
+
+  .wpcf7-not-valid-tip {
+    @extend .help;
+    @extend .is-danger;
+  }
+}
+
+
 
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:

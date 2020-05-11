@@ -9,27 +9,25 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-  <header class="entry-header">
-    <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-
-    <?php if ( 'post' === get_post_type() ) : ?>
-    <div class="entry-meta">
+<div class="columns is-multiline is-relative archive-content">
+  <?php
+  /* Start the Loop */
+  while ( have_posts() ) :
+    the_post();
+    ?>
+    <div class="column is-one-third">
       <?php
-      kneadylola_emroth_posted_on();
-      kneadylola_emroth_posted_by();
+
+      /*
+      * Include the Post-Type-specific template for the content.
+      * If you want to override this in a child theme, then include a file
+      * called content-___.php (where ___ is the Post Type name) and that will be used instead.
+      */
+      get_template_part( 'template-parts/content', 'post-thumbnail' );
       ?>
-    </div><!-- .entry-meta -->
-    <?php endif; ?>
-  </header><!-- .entry-header -->
+    </div>
+    <?php
 
-  <?php kneadylola_emroth_post_thumbnail(); ?>
-
-  <div class="entry-summary">
-    <?php the_excerpt(); ?>
-  </div><!-- .entry-summary -->
-
-  <footer class="entry-footer">
-    <?php kneadylola_emroth_entry_footer(); ?>
-  </footer><!-- .entry-footer -->
-</article><!-- #post-<?php the_ID(); ?> -->
+  endwhile;
+  ?>
+</div>
