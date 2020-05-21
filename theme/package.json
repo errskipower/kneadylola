@@ -26,6 +26,7 @@
     "watcher:recipe": "node-sass -w sass/recipe.scss recipe.css",
     "compile:css": "node-sass sass/style.scss style.css && stylelint '*.css' --fix || true && stylelint '*.css' --fix",
     "lint:scss": "wp-scripts lint-style 'sass/**/*.scss'",
-    "lint:js": "wp-scripts lint-js 'js/*.js'"
+    "lint:js": "wp-scripts lint-js 'js/*.js'",
+    "build": "./scripts/package_theme.sh"
   }
 }
