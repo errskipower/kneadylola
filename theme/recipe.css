@@ -305,7 +305,7 @@ table th {
 .is-size-6 {
   font-size: 1rem !important; }
 
-.is-size-7, .kneady-lola-compact-recipe .wprm-recipe-print, .kneady-lola-compact-recipe .wprm-recipe-details-label, .kneady-lola-compact-recipe .wprm-recipe-summary {
+.is-size-7, .kneady-lola-compact-recipe .recipe-top-link .wprm-recipe-link, .kneady-lola-compact-recipe .wprm-recipe-details-label, .kneady-lola-compact-recipe .wprm-recipe-summary {
   font-size: 0.75rem !important; }
 
 @media screen and (max-width: 768px) {
@@ -1439,14 +1439,14 @@ a.has-text-danger:hover, a.has-text-danger:focus {
         box-shadow: none;
         color: #fff; }
     .button.is-primary.is-light {
-      background-color: #f9f0f0;
+      background-color: findLightColor(#d59696);
       color: #7c3232; }
       .button.is-primary.is-light:hover, .button.is-primary.is-light.is-hovered {
-        background-color: #f6e7e7;
+        background-color: findLightColor(#d59696);
         border-color: transparent;
         color: #7c3232; }
       .button.is-primary.is-light:active, .button.is-primary.is-light.is-active {
-        background-color: #f2dede;
+        background-color: findLightColor(#d59696);
         border-color: transparent;
         color: #7c3232; }
   .button.is-link {
@@ -2125,7 +2125,7 @@ a.has-text-danger:hover, a.has-text-danger:focus {
     width: 128px; }
 
 .kneady-lola-compact-recipe {
-  background: #f9f0f0;
+  background: findLightColor(#d59696);
   border: 1px dashed #d59696;
   padding: 25px; }
   .kneady-lola-compact-recipe h2.wprm-recipe-name {
@@ -2133,10 +2133,10 @@ a.has-text-danger:hover, a.has-text-danger:focus {
   .kneady-lola-compact-recipe .wprm-block-text-normal,
   .kneady-lola-compact-recipe .wprm-block-text-italic {
     font-weight: normal; }
-  .kneady-lola-compact-recipe .wprm-recipe-print {
+  .kneady-lola-compact-recipe .recipe-top-link .wprm-recipe-link {
     color: #7a7a7a !important;
     letter-spacing: 1px; }
-    .kneady-lola-compact-recipe .wprm-recipe-print .wprm-recipe-print-icon {
+    .kneady-lola-compact-recipe .recipe-top-link .wprm-recipe-link .wprm-recipe-icon {
       color: #7a7a7a !important;
       padding-right: 5px; }
   .kneady-lola-compact-recipe .wprm-recipe-rating-details {
@@ -2147,5 +2147,7 @@ a.has-text-danger:hover, a.has-text-danger:focus {
     letter-spacing: .5px; }
   .kneady-lola-compact-recipe .wprm-recipe-header {
     padding: 1.5rem 0; }
+    .kneady-lola-compact-recipe .wprm-recipe-header + .wprm-recipe-ingredient-group .wprm-recipe-group-name:first-of-type {
+      margin-top: 0 !important; }
   .kneady-lola-compact-recipe .wprm-recipe-group-name {
     padding-bottom: 1rem; }

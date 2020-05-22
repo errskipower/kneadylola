@@ -4,6 +4,8 @@
  */
 ?>
 
-<?php
-get_template_part('template-parts/content', 'post-thumbnail');
-?>
+<div class="column is-half">
+  <?php
+  get_template_part('template-parts/content', 'post-thumbnail');
+  ?>
+</div>

@@ -43,9 +43,9 @@
           // show 3 most recent posts, then thumbnail posts for the rest
           ?>
           <div class="column is-half">
-          <?php
+            <?php
             get_template_part('template-parts/content', 'post-thumbnail');
-          ?>
+            ?>
           </div>
         <?php
         else: 

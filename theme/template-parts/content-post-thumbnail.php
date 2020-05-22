@@ -14,7 +14,7 @@
     <a href="<?php the_permalink(); ?>" rel="bookmark">
       <?php the_post_thumbnail('post-thumbnail', ['class' => 'post-thumbnail-image']); ?>
       <div class="post-thumbnail-content has-text-centered">
-        <?php if (is_front_page()): ?>
+        <?php if (!is_search() && !is_archive()): ?>
           <span class="tag is-primary is-light is-uppercase">
             <?php 
             foreach (get_the_category() as $category): 

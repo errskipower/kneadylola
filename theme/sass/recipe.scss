@@ -22,7 +22,7 @@
 // @import "../node_modules/bulma/sass/elements/image.sass";
 
 
-.kneady-lola-compact-recipe{
+.kneady-lola-compact-recipe {
   background: $primary-light;
   border: 1px dashed $primary;
   padding: 25px;
@@ -40,13 +40,13 @@
     @extend .image;
   }
 
-  .wprm-recipe-print {
+  .recipe-top-link .wprm-recipe-link {
     @extend .is-size-7;
 
     color: $grey !important;
     letter-spacing: 1px;
 
-    .wprm-recipe-print-icon {
+    .wprm-recipe-icon {
       color: $grey !important;
       padding-right: 5px;
     }
@@ -68,9 +68,16 @@
 
   .wprm-recipe-header {
     padding: 1.5rem 0;
+
+    &+.wprm-recipe-ingredient-group {
+      .wprm-recipe-group-name:first-of-type {
+        margin-top: 0 !important;
+      }
+    }
   }
 
   .wprm-recipe-group-name {
     padding-bottom: 1rem;
   }
+
 }

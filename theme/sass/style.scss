@@ -58,6 +58,30 @@ a, button, input {
   padding: 0.5rem 1.5rem;
 }
 
+.navbar-burger {
+  margin-left: 20px;
+  background-color: $primary;
+  color: $white;
+
+  &:hover {
+    background-color: $primary-light;
+  }
+
+  &:after {
+    content: 'menu';
+    text-transform: uppercase;
+    position: absolute;
+    left: 32px;
+    color: $primary;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .navbar-dropdown {
+    padding-left: 20px;
+  }
+}
+
 .footer {
   font-size: $small-font-size;
 }
@@ -189,6 +213,7 @@ a, button, input {
     .post-thumbnail-title {
       padding-top: 10px;
       text-shadow: 1px 1px 2px rgba($grey-dark, 0.5);
+      word-break: normal;
     }
   }
 
@@ -201,8 +226,21 @@ a, button, input {
 }
 
 .ajax-load-more-wrap {
-  @extend .column;
-  @extend .is-half;
+
+  .alm-reveal {
+    @extend .columns;
+    @extend .is-multiline;
+    @extend .is-relative;
+    padding: 0.75rem 0.75rem 0;
+
+    &:not(:last-child) {
+      margin-bottom: 0 !important;
+    }
+
+    &:last-child {
+      margin-bottom: 0.75rem;
+    }
+  }
   
   .alm-load-more-btn {
     &:disabled {
@@ -360,6 +398,19 @@ div.wpcf7 {
     @extend .is-danger;
   }
 }
+
+.content {
+
+  figure figcaption {
+    @extend .is-size-7;
+    margin: 0 auto;
+  }
+
+  ul.blocks-gallery-grid {
+    margin: 0;
+  }
+}
+
 
 
 
