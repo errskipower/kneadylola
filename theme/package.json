@@ -17,8 +17,8 @@
     "url": "https://github.com/Automattic/_s/issues"
   },
   "devDependencies": {
-    "node-sass": "^4.13.1",
-    "@wordpress/scripts": "^7.2.0",
+    "node-sass": "^9.0.0",
+    "@wordpress/scripts": "^26.8.0",
     "bulma": "^0.8.2"
   },
   "scripts": {
